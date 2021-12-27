@@ -9,6 +9,16 @@ function main() {
             clearInterval(Timer);
         }
 
+        now = getdate();
+        window.alert(now);
+        /*設定絡みそうなやつ*/
+        sort_enable = true;
+        eol_notshow = true;
+
+        if(sort_enable = false){
+            return;
+        }
+
         window.alert("reportSorter"); /*動作確認のwindow.alert(リリース時消す)*/
         /*レポートのテーブルはiframeの中らしいからまずiframeを取得*/
         elem = document.getElementById("main-frame-if");
@@ -57,23 +67,90 @@ function main() {
                 //console.log(i+"+"+j);
         }
 
+        /*締め切り過ぎてるモノだけを別配列にコピー*/
+        var eols = [];
+        if(eol_notshow){
+            for(let i = 0; i < table.rows.length; i++){ /*行のループ*/
+                eols[i]=[]; /*配列を二次元にする，行内データを入れるため*/
+                if(array[i][table.rows[0].cells.length+2] < now){ //締め切り過ぎてたら
+                    for(let j = 0; j < table.rows[0].cells.length+2; j++){ /*行内でのループ*/
+                        eols[i][j] = array[i][j]; //データをコピー
+                        array[i][j] = null; //コピーしたら元配列ではnullに
+                    }
+                }else{
+                    for(let j = 0; j < table.rows[0].cells.length+2; j++){ /*行内でのループ*/
+                        eols[i][j] = null;
+                    }
+                }
+            }
+        }
+        //null要素を消して詰める
+        var active = array.filter(Boolean);
+        eols = eols.filter(v=>v);
+
+        window.alert("nulled");
+
+        console.clear();
+        for(let i = 1; i < active.length; i++){
+            for(let j = 0; j < table.rows[0].cells.length; j++){
+                console.log(active[i][j]);
+            }
+        }
+
+
         /*締め切り日時についてソート*/
-        array.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
+        active.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
+        eols.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
 
         /*提出状況についてソート*/
-        array.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
+        active.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
+        eols.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
 
-        /*動作確認用*/
-        //console.clear()
-        //for(let i = 0; i < table.rows.length; i++){
-        //  console.log(array[i][7]);
-        //}
+        window.alert("sorted");
 
         /*ソートしたデータでテーブルを書き換え*/
-        for(let i = 0; i < table.rows.length; i++){
+        var filled = 0;
+        for(let i = 1; i < active.length; i++){
             for(let j = 0; j < table.rows[0].cells.length; j++){
-                table.rows[i].cells[j].innerHTML = array[i][j];
+                table.rows[i].cells[j].innerHTML = active[i][j];
+            }
+            filled+=1;
+        }
+        window.alert(filled);
+        if(eol_notshow){
+            for(let k = 0; i < eols.length; k++){
+                for(let j = 0; j < table.rows[0].cells.length; j++){
+                    table.rows[active.length+1+k].cells[j].innerHTML = eols[k][j];
+                }
             }
         }
     }
+}
+
+function getdate(){
+    var now = new Date();
+
+    var Year = now.getFullYear();
+
+    var Month = now.getMonth()+1;
+    if(Month<10){
+        Month = "0" + Month;
+    }
+
+    var Dates = now.getDate();
+    if(Dates<10){
+        Dates = "0" + Dates;
+    }
+
+    var Hour = now.getHours();
+    if(Hour<10){
+        Hour = "0" + Hour;
+    }
+
+    var Min = now.getMinutes();
+    if(Min<10){
+        Min = "0" + Min;
+    }
+
+    return Year.toString() + Month.toString() + Dates.toString() + Hour.toString() + Min.toString();
 }
