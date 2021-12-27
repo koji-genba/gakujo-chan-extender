@@ -1,12 +1,13 @@
 {
     "manifest_version":2,
-    "name":"gakujo-Extender",
+    "name":"gakujo-chan-Extender",
     "version":"0.1",
 
     "description":"gakujo-chan-Extender",
 
     "icons":{
-        "48":"icons/border-48.png"
+        "48":"icons/icon48.png",
+        "128":"icons/icon128.png"
     },
 
     "content_scripts":[
