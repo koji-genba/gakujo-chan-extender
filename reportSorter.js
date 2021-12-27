@@ -13,7 +13,7 @@ function main() {
         window.alert(now);
         /*設定絡みそうなやつ*/
         sort_enable = true;
-        eol_notshow = true;
+        eol_notshow = false;
 
         if(sort_enable = false){
             return;
@@ -88,7 +88,7 @@ function main() {
         var active = array.filter(Boolean);
         eols = eols.filter(v=>v);
 
-        window.alert("nulled");
+        //window.alert("nulled");
 
         console.clear();
         for(let i = 1; i < active.length; i++){
@@ -106,7 +106,7 @@ function main() {
         active.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
         eols.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
 
-        window.alert("sorted");
+        //window.alert("sorted");
 
         /*ソートしたデータでテーブルを書き換え*/
         var filled = 0;
@@ -116,7 +116,7 @@ function main() {
             }
             filled+=1;
         }
-        window.alert(filled);
+        //window.alert(filled);
         if(eol_notshow){
             for(let k = 0; i < eols.length; k++){
                 for(let j = 0; j < table.rows[0].cells.length; j++){
