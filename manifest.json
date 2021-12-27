@@ -3,7 +3,7 @@
     "name":"gakujo-Extender",
     "version":"0.1",
 
-    "description":"Auto Extender",
+    "description":"gakujo-chan-Extender",
 
     "icons":{
         "48":"icons/border-48.png"
@@ -13,7 +13,7 @@
         {
             "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main*"],
             "all_frames": true,
-            "js":["main.js"]
+            "js":["autoExtender.js"]
         },
         {
             "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main&tabId=en"],
