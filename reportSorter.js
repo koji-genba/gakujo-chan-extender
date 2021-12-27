@@ -10,7 +10,7 @@ function main() {
         }
 
         now = getdate();
-        window.alert(now);
+        //window.alert(now);
         /*設定絡みそうなやつ*/
         sort_enable = true;
         eol_notshow = false;
@@ -19,7 +19,7 @@ function main() {
             return;
         }
 
-        window.alert("reportSorter"); /*動作確認のwindow.alert(リリース時消す)*/
+        //window.alert("reportSorter"); /*動作確認のwindow.alert(リリース時消す)*/
         /*レポートのテーブルはiframeの中らしいからまずiframeを取得*/
         elem = document.getElementById("main-frame-if");
         //window.alert(elem); /*動作確認のwindow.alert(リリース時消す)*/
@@ -59,7 +59,7 @@ function main() {
                     array[i][table.rows[0].cells.length+2] = array[i][table.rows[0].cells.length+2].replace("/","");
                     array[i][table.rows[0].cells.length+2] = array[i][table.rows[0].cells.length+2].replace(":","");
                     array[i][table.rows[0].cells.length+2] = array[i][table.rows[0].cells.length+2].replace(" ","");
-                    console.log(array[i][table.rows[0].cells.length+2])
+                    //console.log(array[i][table.rows[0].cells.length+2])
                 }
             }
                 /*動作確認用*/
@@ -90,10 +90,10 @@ function main() {
 
         //window.alert("nulled");
 
-        console.clear();
+        //console.clear();
         for(let i = 1; i < active.length; i++){
             for(let j = 0; j < table.rows[0].cells.length; j++){
-                console.log(active[i][j]);
+                //console.log(active[i][j]);
             }
         }
 
