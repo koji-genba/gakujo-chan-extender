@@ -1,9 +1,9 @@
 {
     "manifest_version":2,
-    "name":"gakujo-chan-Extender",
-    "version":"0.1",
+    "name":"More-Better-Gakujo",
+    "version":"0.3",
 
-    "description":"gakujo-chan-Extender",
+    "description":"学情の不便を多少解消するかもしれない新大生用拡張機能",
 
     "icons":{
         "48":"icons/icon48.png",

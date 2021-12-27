@@ -1,4 +1,4 @@
-# gakujo-chan-extender
+# More-Better-Gakujo
 
 学情ちゃんを使いやすくするためのブラウザ拡張機能を作りたいな～ってやつです
 
