@@ -23,10 +23,9 @@ Firefoxはこちらからどうぞ
 
 https://addons.mozilla.org/ja/firefox/addon/more-better-gakujo/
 
-Chromeの方は現在審査中です．
+Chromeはこちらから
 
-普通にここからDLして読み込ませて動かす分には普通に動くのでとりあえずはそれでどうぞ．
-んなこた出来へんがなって人は審査通ることを祈ってください．私も一応頑張ってみます．
+https://twitter.com/koji_genba/status/1475833197938483201?s=20
 
 # 使い方
 
@@ -56,3 +55,4 @@ https://twitter.com/koji_genba ←これが作者です．質問や問い合わ�
 2021/12/28:v0.3Firefox版公開
 2021/12/28:v0.31(Firefox)時間延長機能の修正
 2021/12/28:v0.32(Firefox)時間延長機能の追加修正
+2021/12/28:v0.3Chrome版公開
