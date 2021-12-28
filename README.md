@@ -19,7 +19,12 @@
 とりあえず最新版のFirefoxで開発しています．Chromeも一応動作確認を行っています(多分大丈夫なはず，はず)．Edgeだと微妙に動きが悪い気がします．なんとなく．
 
 # インストール
-とりあえずFirefoxとChromeで使えるといいよなぁと思ってFirefox Add-onesとChromewebストアで申請出してますけども審査通る気がさっぱりしません．
+Firefoxはこちらからどうぞ
+
+https://addons.mozilla.org/ja/firefox/addon/more-better-gakujo/
+
+Chromeの方は現在審査中です．
+
 普通にここからDLして読み込ませて動かす分には普通に動くのでとりあえずはそれでどうぞ．
 んなこた出来へんがなって人は審査通ることを祈ってください．私も一応頑張ってみます．
 
