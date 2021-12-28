@@ -25,7 +25,7 @@ https://addons.mozilla.org/ja/firefox/addon/more-better-gakujo/
 
 Chromeはこちらから
 
-https://twitter.com/koji_genba/status/1475833197938483201?s=20
+https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdofhpnnnecadmmod
 
 # 使い方
 
