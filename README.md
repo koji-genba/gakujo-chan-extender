@@ -51,3 +51,6 @@ Chromeの方は現在審査中です．
 
 # 作者
 https://twitter.com/koji_genba ←これが作者です．質問や問い合わせがあればどぞ．
+
+# 記録
+2021/12/28:v0.3Firefox版公開
