@@ -52,7 +52,7 @@ https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdof
 https://twitter.com/koji_genba ←これが作者です．質問や問い合わせがあればどぞ．
 
 # 記録
-2021/12/28:v0.3Firefox版公開
-2021/12/28:v0.31(Firefox)時間延長機能の修正
-2021/12/28:v0.32(Firefox)時間延長機能の追加修正
-2021/12/28:v0.3Chrome版公開
+2021/12/28:v0.3Firefox版公開  
+2021/12/28:v0.31(Firefox)時間延長機能の修正  
+2021/12/28:v0.32(Firefox)時間延長機能の追加修正  
+2021/12/28:v0.3Chrome版公開  
