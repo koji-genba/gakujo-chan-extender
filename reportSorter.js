@@ -113,6 +113,10 @@ function main() {
         for(let i = 1; i < active.length; i++){
             for(let j = 0; j < table.rows[0].cells.length; j++){
                 table.rows[i].cells[j].innerHTML = active[i][j];
+                /*一時保存の文字を青色に変える*/
+                if (table.rows[i].cells[j].textContent.match('一時保存')) {
+                    table.rows[i].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
+                }
             }
             filled+=1;
         }
@@ -121,6 +125,9 @@ function main() {
             for(let k = 0; i < eols.length; k++){
                 for(let j = 0; j < table.rows[0].cells.length; j++){
                     table.rows[active.length+1+k].cells[j].innerHTML = eols[k][j];
+                    if (table.rows[active.length+1+k].cells[j].textContent.match('一時保存')) {
+                        table.rows[active.length+1+k].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
+                    }
                 }
             }
         }
