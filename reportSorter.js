@@ -43,13 +43,13 @@ function main() {
             for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
                 array[i][j] = table.rows[i].cells[j].innerHTML; /*ボタンがすっ飛んだりするからHTMLで取る*/
                 /*ソートするときにやりやすいように提出状態に応じてフラグを立てる，フラグはボタンのデータの次に格納*/
-                if(j==2 && table.rows[i].cells[j].textContent.match('未提出')){
+                if(j==2 && (table.rows[i].cells[j].textContent.match('未提出') || table.rows[i].cells[j].textContent.match('Not submitted'))){
                     array[i][table.rows[0].cells.length+1] = 1;
                 }
-                if(j==2 && table.rows[i].cells[j].textContent.match('一時保存')){
+                if(j==2 && (table.rows[i].cells[j].textContent.match('一時保存') || table.rows[i].cells[j].textContent.match('Temporarily saved'))){
                     array[i][table.rows[0].cells.length+1] = 2;
                 }
-                if(j==2 && table.rows[i].cells[j].textContent.match('提出済')){
+                if(j==2 && (table.rows[i].cells[j].textContent.match('提出済') || table.rows[i].cells[j].textContent.match('Submitted'))){
                     array[i][table.rows[0].cells.length+1] = 3;
                 }
                 /*ソートするときにやりやすいように締め切り日時だけを切り出して，/と:を消して格納する，配列の一番後ろ(↑のフラグのデータの次)に格納*/
@@ -117,6 +117,9 @@ function main() {
                 if (table.rows[i].cells[j].textContent.match('一時保存')) {
                     table.rows[i].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
                 }
+                if (table.rows[i].cells[j].textContent.match('Temporarily saved')) {
+                    table.rows[i].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
+                }
             }
             filled+=1;
         }
@@ -127,6 +130,9 @@ function main() {
                     table.rows[active.length+1+k].cells[j].innerHTML = eols[k][j];
                     if (table.rows[active.length+1+k].cells[j].textContent.match('一時保存')) {
                         table.rows[active.length+1+k].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
+                    }
+                    if (table.rows[active.length+1+k].cells[j].textContent.match('Temporarily saved')) {
+                        table.rows[active.length+1+k].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
                     }
                 }
             }
