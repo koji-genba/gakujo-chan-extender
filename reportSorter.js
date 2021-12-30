@@ -51,7 +51,6 @@ function main() {
                     array[i][table.rows[0].cells.length+2] = array[i][table.rows[0].cells.length+2].replace(" ","");
                 }
             }
-                /*動作確認用*/
         }
 
         /*締め切り過ぎてるモノだけを別配列にコピー*/
@@ -97,20 +96,6 @@ function main() {
                 }
             }
             filled+=1;
-        }
-
-        if(eol_notshow){
-            for(let k = 0; i < eols.length; k++){
-                for(let j = 0; j < table.rows[0].cells.length; j++){
-                    table.rows[active.length+1+k].cells[j].innerHTML = eols[k][j];
-                    if (table.rows[active.length+1+k].cells[j].textContent.match('一時保存')) {
-                        table.rows[active.length+1+k].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
-                    }
-                    if (table.rows[active.length+1+k].cells[j].textContent.match('Temporarily saved')) {
-                        table.rows[active.length+1+k].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
-                    }
-                }
-            }
         }
     }
 }
