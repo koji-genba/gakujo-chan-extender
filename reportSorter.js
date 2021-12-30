@@ -19,22 +19,12 @@ function main() {
             return;
         }
 
-        //window.alert("reportSorter"); /*動作確認のwindow.alert(リリース時消す)*/
         /*レポートのテーブルはiframeの中らしいからまずiframeを取得*/
         elem = document.getElementById("main-frame-if");
-        //window.alert(elem); /*動作確認のwindow.alert(リリース時消す)*/
         /*iframeからレポートのテーブルを取得*/
         /*レポートのテーブルそのものにはidが無いから近くのidあるやつから2つ後ろってので表現してる*/
         table = elem.contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)");
-        //window.alert(table.innerHTML); /*動作確認のwindow.alert(リリース時消す)*/
 
-        /*取得したやつをtextをコンソールに吐く，動作確認用*/
-
-        //for (let row of table.rows) {
-        //    for(let cell of row.cells){
-        //       console.log(cell.innerText);
-        //    }
-        //}
 
         var array = []; /*データ入れる配列，後で二次元にする*/
 
@@ -59,12 +49,9 @@ function main() {
                     array[i][table.rows[0].cells.length+2] = array[i][table.rows[0].cells.length+2].replace("/","");
                     array[i][table.rows[0].cells.length+2] = array[i][table.rows[0].cells.length+2].replace(":","");
                     array[i][table.rows[0].cells.length+2] = array[i][table.rows[0].cells.length+2].replace(" ","");
-                    //console.log(array[i][table.rows[0].cells.length+2])
                 }
             }
                 /*動作確認用*/
-                //console.log(array[i][j]);
-                //console.log(i+"+"+j);
         }
 
         /*締め切り過ぎてるモノだけを別配列にコピー*/
@@ -88,16 +75,6 @@ function main() {
         var active = array.filter(Boolean);
         eols = eols.filter(v=>v);
 
-        //window.alert("nulled");
-
-        //console.clear();
-        for(let i = 1; i < active.length; i++){
-            for(let j = 0; j < table.rows[0].cells.length; j++){
-                //console.log(active[i][j]);
-            }
-        }
-
-
         /*締め切り日時についてソート*/
         active.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
         eols.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
@@ -105,8 +82,6 @@ function main() {
         /*提出状況についてソート*/
         active.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
         eols.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
-
-        //window.alert("sorted");
 
         /*ソートしたデータでテーブルを書き換え*/
         var filled = 0;
@@ -123,7 +98,7 @@ function main() {
             }
             filled+=1;
         }
-        //window.alert(filled);
+
         if(eol_notshow){
             for(let k = 0; i < eols.length; k++){
                 for(let j = 0; j < table.rows[0].cells.length; j++){
