@@ -13,7 +13,6 @@ function main() {
         //window.alert(now);
         /*設定絡みそうなやつ*/
         sort_enable = true;
-        eol_notshow = false;
 
         if(sort_enable = false){
             return;
