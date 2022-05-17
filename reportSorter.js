@@ -1,23 +1,21 @@
-window.addEventListener("load", main, false);
+window.addEventListener("load", second, false);
+
+function second(){
+    setTimeout(main,1500);
+}
 
 function load(){
     var table;
     /*レポートの表が表示されてから処理を開始するためのやつ*/
-    const Timer = setInterval(Loaded, 1000);
-    function Loaded() {
-        if (document.getElementById("main-frame-if") != null) {
-            clearInterval(Timer);
-            console.log("table call");
-            elem = document.getElementById("main-frame-if");
-            table = elem.contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)");
-            console.log("table called");
-        }
-        console.log("loaded");
-        console.log(table);
-        return table;
+    if (document.getElementById("main-frame-if") != null) {
+        console.log("table call");
+        elem = document.getElementById("main-frame-if");
+        table = elem.contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)");
+        console.log("table called");
     }
-    console.log("load");
-    console.log(table);
+    console.log("Loaded-table",table);
+    console.log("load-table",table);
+    return table;
 }
 
 function makearray1(table){
@@ -125,7 +123,7 @@ function sort_by_date(table){
     console.log("sorted by date");
 }
 
-function sort_by_kaikoubangou(table){
+function sort_by_number(table){
     array1 = makearray1(table);
     /*締め切り日時についてソート*/
     array1.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
@@ -139,7 +137,7 @@ function sort_by_kaikoubangou(table){
 
 
     /*ソートしたデータでテーブルを書き換え*/
-    for(let i = 1; i < array1.length+10; i++){
+    for(let i = 1; i < 32; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
             table.rows[i].cells[j].innerHTML = array1[i][j];
             /*一時保存の文字を青色に変える*/
@@ -158,8 +156,10 @@ function sort_by_title(table){
     array1 = makearray1(table);
     console.log("sort by title load")
     console.log(array1);
+    console.log("sort by title 1");
     /*締め切り日時についてソート*/
     array1.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
+    console.log("sort by title 2");
     /*開講番号でソート*/
     array1.sort((a,b)=>{
         if(a[1] < b[1]) return -1;
@@ -167,19 +167,27 @@ function sort_by_title(table){
         return 0;
     });
 
+    console.log("sort by title 3");
 
     /*ソートしたデータでテーブルを書き換え*/
-    for(let i = 1; i < array1.length+10; i++){
+    for(let i = 1; i < 32; i++){
+        console.log("i=",i);
         for(let j = 0; j < table.rows[0].cells.length; j++){
+            console.log("j=",j);
+            console.log("sort by title 4");
             table.rows[i].cells[j].innerHTML = array1[i][j];
+            console.log("sort by title 5");
             /*一時保存の文字を青色に変える*/
             if (table.rows[i].cells[j].textContent.match('一時保存')) {
                 table.rows[i].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
             }
+            console.log("sort by title 6");
             if (table.rows[i].cells[j].textContent.match('Temporarily saved')) {
                 table.rows[i].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
             }
+            console.log("sort by title 7");
         }
+        console.log("sort by title 8");
     }
     console.log("sorted by title");
 }
@@ -213,23 +221,34 @@ function getdate(){
 }
 
 function main(){
+
     table = load();
-    console.log("1");
-    console.log(table);
+
     array1 = makearray1(table);
-    console.log(array1);
-    console.log("2");
-    //titlebutton = document.createElement("button");
-    //console.log("1");
-    //titlebutton.id = "titlebutton";
-    //console.log("2");
-    //titlebutton.textContent = "▼";
-    //console.log("3");
-    //titlebutton.addEventListener('click',function(){
-    //    sort_by_title(array1);
-    //});
-    //console.log("4");
-    //console.log(table);
-    //table.rows[0].cells[1].appendChild(titlebutton);
-    //console.log("5");
+
+    titlebutton = document.createElement("button");
+    titlebutton.id = "titlebutton";
+    titlebutton.textContent = "▼";
+    titlebutton.addEventListener('click',function(){
+        sort_by_title(table);
+    });
+    table.rows[0].cells[1].appendChild(titlebutton);
+
+    datebutton = document.createElement("button");
+    datebutton.id = "datebutton";
+    datebutton.textContent = "▼";
+    datebutton.addEventListener('click',function(){
+        sort_by_date(table);
+    });
+    table.rows[0].cells[7].appendChild(datebutton);
+
+    numberbutton = document.createElement("button");
+    numberbutton.id = "numberbutton";
+    numberbutton.textContent = "▼";
+    numberbutton.addEventListener('click',function(){
+        sort_by_number(table);
+    });
+    table.rows[0].cells[3].appendChild(numberbutton);
+
+    console.log(table.rows.length);
 }
