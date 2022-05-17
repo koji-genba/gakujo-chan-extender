@@ -35,7 +35,7 @@
 ## GPAの計算とソート
 ### GPA計算
 永遠に更新されないかのように思えるGPAを公開されている成績から自動で計算し，表示します．  
-###　ソート
+### ソート
 ![成績画面のボタン](https://github.com/koji-genba/gakujo-chan-extender/blob/Readme_images/score_firefox.png)  
 レポートのソートと同じ感じです．  
 
