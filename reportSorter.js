@@ -44,6 +44,7 @@ function main(){
             table.rows[i].cells[2].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
         }
     }
+    sort_by_date(table);
 }
 
 
