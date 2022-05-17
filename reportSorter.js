@@ -31,9 +31,9 @@ function main(){
         sort_by_number(table);
     });
 
-    document.getElementById("tabmenutable").appendChild(datebutton);
-    document.getElementById("tabmenutable").appendChild(numberbutton);
     document.getElementById("tabmenutable").appendChild(titlebutton);
+    document.getElementById("tabmenutable").appendChild(numberbutton);
+    document.getElementById("tabmenutable").appendChild(datebutton);
 
     for(let i = 0; i < table.rows.length; i++){
         /*一時保存の文字を青色に変える*/
