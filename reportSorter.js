@@ -16,7 +16,6 @@ function main(){
     titlebutton.addEventListener('click',function(){
         sort_by_title(table);
     });
-    table.rows[0].cells[1].appendChild(titlebutton);
 
     datebutton = document.createElement("button");
     datebutton.id = "datebutton";
@@ -24,7 +23,6 @@ function main(){
     datebutton.addEventListener('click',function(){
         sort_by_date(table);
     });
-    table.rows[0].cells[7].appendChild(datebutton);
 
     numberbutton = document.createElement("button");
     numberbutton.id = "numberbutton";
@@ -32,7 +30,6 @@ function main(){
     numberbutton.addEventListener('click',function(){
         sort_by_number(table);
     });
-    table.rows[0].cells[3].appendChild(numberbutton);
 
     console.log("mainend");
     document.getElementById("tabmenutable").appendChild(datebutton);
