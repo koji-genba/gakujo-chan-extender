@@ -14,9 +14,9 @@
 
 
 ## レポートのソート
-![レポート画面のボタン](https://github.com/koji-genba/gakujo-chan-extender/blob/Readme_images/report_firefox.png)
-レポート提出の画面を開きますとこんな感じにボタンが追加されてます．ボタンを押すと書いてある感じにソートします．使えばわかる．
-ついでにぱっと見分かりにくいことに定評のある一時保存さんを青字で表示することにより分かりやすくします，がボタンを押さんと青字にならない欠陥仕様．そのうち直す．
+![レポート画面のボタン](https://github.com/koji-genba/gakujo-chan-extender/blob/Readme_images/report_firefox.png)  
+レポート提出の画面を開きますとこんな感じにボタンが追加されてます．ボタンを押すと書いてある感じにソートします．使えばわかる．  
+ついでにぱっと見分かりにくいことに定評のある一時保存さんを青字で表示することにより分かりやすくします，がボタンを押さんと青字にならない欠陥仕様．そのうち直す．  
 ### 提出期間でソート
 期限内  
 ｜未提出  
@@ -34,10 +34,10 @@
 
 ## GPAの計算とソート
 ### GPA計算
-永遠に更新されないかのように思えるGPAを公開されている成績から自動で計算し，表示します．
+永遠に更新されないかのように思えるGPAを公開されている成績から自動で計算し，表示します．  
 ###　ソート
-![成績画面のボタン](https://github.com/koji-genba/gakujo-chan-extender/blob/Readme_images/score_firefox.png)
-レポートのソートと同じ感じです．
+![成績画面のボタン](https://github.com/koji-genba/gakujo-chan-extender/blob/Readme_images/score_firefox.png)  
+レポートのソートと同じ感じです．  
 
 # 環境
 とりあえず最新版のFirefoxで開発しています．Chromeも動作確認を行っています．Edgeもたぶん大丈夫．
