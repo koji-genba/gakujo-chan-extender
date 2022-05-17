@@ -31,9 +31,11 @@ function main(){
         sort_by_number(table);
     });
 
+    console.log("mainend");
     document.getElementById("tabmenutable").appendChild(datebutton);
     document.getElementById("tabmenutable").appendChild(numberbutton);
     document.getElementById("tabmenutable").appendChild(titlebutton);
+    console.log("mainendddd");
 }
 
 
@@ -41,9 +43,13 @@ function load(){
     var table;
     /*レポートの表が表示されてから処理を開始するためのやつ*/
     if (document.getElementById("main-frame-if") != null) {
+        console.log("table call");
         elem = document.getElementById("main-frame-if");
         table = elem.contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)");
+        console.log("table called");
     }
+    console.log("Loaded-table",table);
+    console.log("load-table",table);
     return table;
 }
 
@@ -77,15 +83,20 @@ function makearray1(table){
             }
         }
     }
+    console.log(array1.length);
+    console.log(array1);
+    console.log("array1 maked");
     return array1;
 }
 
 function sort_by_date(table){
+    console.log("1");
     array1 = makearray1(table);
     /*締め切り過ぎてるモノだけを別配列にコピー*/
     var array2 = [];
     for(let i = 1; i < array1.length; i++){ /*行のループ*/
         array2[i]=[]; /*配列を二次元にする，行内データを入れるため*/
+        console.log(i);
         if(array1[i][table.rows[0].cells.length+2] < now){ //締め切り過ぎてたら
             for(let j = 0; j <= table.rows[0].cells.length+2; j++){ /*行内でのループ*/
                 array2[i][j] = array1[i][j]; //データをコピー
@@ -97,17 +108,21 @@ function sort_by_date(table){
             }
         }
     }
+    console.log("2");
 
 
     //null要素を消して詰める
     var active = array1.filter(Boolean);
     var eols = array2.filter(Boolean);
+    console.log("3");
     /*締め切り日時についてソート*/
     active.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
     eols.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
+    console.log("4");
     /*提出状況についてソート*/
     active.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
     eols.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
+    console.log("5");
     /*有効なレポートと期限切れレポートの配列をまとめる*/
     var tasks = [];
     var skip = 0;
@@ -131,6 +146,7 @@ function sort_by_date(table){
             skip++;
         }
     }
+    console.log("6");
     /*ソートしたデータでテーブルを書き換え*/
     for(let i = 0; i < tasks.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
@@ -144,6 +160,8 @@ function sort_by_date(table){
             }
         }
     }
+    console.log(tasks.length);
+    console.log("sorted by date");
 }
 
 function sort_by_number(table){
@@ -172,6 +190,8 @@ function sort_by_number(table){
             }
         }
     }
+    console.log(array1.length);
+    console.log("sorted by number");
 }
 
 function sort_by_title(table){
@@ -199,6 +219,8 @@ function sort_by_title(table){
             }
         }
     }
+    console.log(array1.length);
+    console.log("sorted by title");
     main();
 }
 
