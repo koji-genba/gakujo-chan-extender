@@ -1,56 +1,61 @@
 window.addEventListener("load", main, false);
 
-function main() {
-
+function load(){
+    var table;
     /*レポートの表が表示されてから処理を開始するためのやつ*/
     const Timer = setInterval(Loaded, 1000);
     function Loaded() {
         if (document.getElementById("main-frame-if") != null) {
             clearInterval(Timer);
+            console.log("table call");
+            elem = document.getElementById("main-frame-if");
+            table = elem.contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)");
+            console.log("table called");
         }
+        console.log("loaded");
+        console.log(table);
+        return table;
+    }
+    console.log("load");
+    console.log(table);
+}
 
-        //今の日付時刻取得
-        now = getdate();
+function makearray1(table){
+    //今の日付時刻取得
+    now = getdate();
 
-        /*レポートのテーブルはiframeの中らしいからまずiframeを取得*/
-        elem = document.getElementById("main-frame-if");
-        /*iframeからレポートのテーブルを取得*/
-        /*レポートのテーブルそのものにはidが無いから近くのidあるやつから2つ後ろってので表現してる*/
-        table = elem.contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)");
+    array1 = []; /*データ入れる配列，後で二次元にする*/
 
-        var array1 = []; /*データ入れる配列，後で二次元にする*/
-
-        for(let i = 1; i < table.rows.length; i++){ /*行のループ*/
-            array1[i]=[] /*配列を二次元にする，行内データを入れるため*/
-            for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
-                array1[i][j] = table.rows[i].cells[j].innerHTML; /*ボタンがすっ飛んだりするからHTMLで取る*/
-                /*ソートするときにやりやすいように提出状態に応じてフラグを立てる，フラグはボタンのデータの次に格納*/
-                if(j==2 && (table.rows[i].cells[j].textContent.match('未提出') || table.rows[i].cells[j].textContent.match('Not submitted'))){
-                    array1[i][table.rows[0].cells.length+1] = 1;
-                }
-                if(j==2 && (table.rows[i].cells[j].textContent.match('一時保存') || table.rows[i].cells[j].textContent.match('Temporarily saved'))){
-                    array1[i][table.rows[0].cells.length+1] = 2;
-                }
-                if(j==2 && (table.rows[i].cells[j].textContent.match('提出済') || table.rows[i].cells[j].textContent.match('Submitted'))){
-                    array1[i][table.rows[0].cells.length+1] = 3;
-                }
-                /*ソートするときにやりやすいように締め切り日時だけを切り出して，/と:を消して格納する，↑のフラグのデータの次に格納*/
-                if(j==7){
-                    array1[i][table.rows[0].cells.length+2] = table.rows[i].cells[j].textContent.substr(table.rows[i].cells[j].textContent.indexOf('～')+1);
-                    array1[i][table.rows[0].cells.length+2] = array1[i][table.rows[0].cells.length+2].replace("/","");
-                    array1[i][table.rows[0].cells.length+2] = array1[i][table.rows[0].cells.length+2].replace("/","");
-                    array1[i][table.rows[0].cells.length+2] = array1[i][table.rows[0].cells.length+2].replace(":","");
-                    array1[i][table.rows[0].cells.length+2] = array1[i][table.rows[0].cells.length+2].replace(" ","");
-                }
+    for(let i = 1; i < table.rows.length; i++){ /*行のループ*/
+        array1[i]=[] /*配列を二次元にする，行内データを入れるため*/
+        for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
+            array1[i][j] = table.rows[i].cells[j].innerHTML; /*ボタンがすっ飛んだりするからHTMLで取る*/
+            /*ソートするときにやりやすいように提出状態に応じてフラグを立てる，フラグはボタンのデータの次に格納*/
+            if(j==2 && (table.rows[i].cells[j].textContent.match('未提出') || table.rows[i].cells[j].textContent.match('Not submitted'))){
+                array1[i][table.rows[0].cells.length+1] = 1;
+            }
+            if(j==2 && (table.rows[i].cells[j].textContent.match('一時保存') || table.rows[i].cells[j].textContent.match('Temporarily saved'))){
+                array1[i][table.rows[0].cells.length+1] = 2;
+            }
+            if(j==2 && (table.rows[i].cells[j].textContent.match('提出済') || table.rows[i].cells[j].textContent.match('Submitted'))){
+                array1[i][table.rows[0].cells.length+1] = 3;
+            }
+            /*ソートするときにやりやすいように締め切り日時だけを切り出して，/と:を消して格納する，↑のフラグのデータの次に格納*/
+            if(j==7){
+                array1[i][table.rows[0].cells.length+2] = table.rows[i].cells[j].textContent.substr(table.rows[i].cells[j].textContent.indexOf('～')+1);
+                array1[i][table.rows[0].cells.length+2] = array1[i][table.rows[0].cells.length+2].replace("/","");
+                array1[i][table.rows[0].cells.length+2] = array1[i][table.rows[0].cells.length+2].replace("/","");
+                array1[i][table.rows[0].cells.length+2] = array1[i][table.rows[0].cells.length+2].replace(":","");
+                array1[i][table.rows[0].cells.length+2] = array1[i][table.rows[0].cells.length+2].replace(" ","");
             }
         }
-
-        //==================================================
-
-        //==================================================
     }
+    console.log("array1 maked");
+    return array1;
+}
 
-function sort_by_date(array1){
+function sort_by_date(table){
+    array1 = makearray1(table);
     /*締め切り過ぎてるモノだけを別配列にコピー*/
     var array2 = [];
     if(1){
@@ -117,9 +122,11 @@ function sort_by_date(array1){
             }
         }
     }
+    console.log("sorted by date");
 }
 
-function sort_by_kaikoubangou(array1){
+function sort_by_kaikoubangou(table){
+    array1 = makearray1(table);
     /*締め切り日時についてソート*/
     array1.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
 
@@ -144,12 +151,15 @@ function sort_by_kaikoubangou(array1){
             }
         }
     }
+    console.log("sorted by number");
 }
 
-function sort_by_name(array1){
+function sort_by_title(table){
+    array1 = makearray1(table);
+    console.log("sort by title load")
+    console.log(array1);
     /*締め切り日時についてソート*/
     array1.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
-
     /*開講番号でソート*/
     array1.sort((a,b)=>{
         if(a[1] < b[1]) return -1;
@@ -171,6 +181,7 @@ function sort_by_name(array1){
             }
         }
     }
+    console.log("sorted by title");
 }
 
 function getdate(){
@@ -201,4 +212,24 @@ function getdate(){
     return Year.toString() + Month.toString() + Dates.toString() + Hour.toString() + Min.toString();
 }
 
+function main(){
+    table = load();
+    console.log("1");
+    console.log(table);
+    array1 = makearray1(table);
+    console.log(array1);
+    console.log("2");
+    //titlebutton = document.createElement("button");
+    //console.log("1");
+    //titlebutton.id = "titlebutton";
+    //console.log("2");
+    //titlebutton.textContent = "▼";
+    //console.log("3");
+    //titlebutton.addEventListener('click',function(){
+    //    sort_by_title(array1);
+    //});
+    //console.log("4");
+    //console.log(table);
+    //table.rows[0].cells[1].appendChild(titlebutton);
+    //console.log("5");
 }
