@@ -4,6 +4,44 @@ function second(){
     setTimeout(main,1500);
 }
 
+function main(){
+
+    table = load();
+
+    array1 = makearray1(table);
+
+    titlebutton = document.createElement("button");
+    titlebutton.id = "titlebutton";
+    titlebutton.textContent = "タイトルでソート";
+    titlebutton.addEventListener('click',function(){
+        sort_by_title(table);
+    });
+    table.rows[0].cells[1].appendChild(titlebutton);
+
+    datebutton = document.createElement("button");
+    datebutton.id = "datebutton";
+    datebutton.textContent = "提出期間でソート";
+    datebutton.addEventListener('click',function(){
+        sort_by_date(table);
+    });
+    table.rows[0].cells[7].appendChild(datebutton);
+
+    numberbutton = document.createElement("button");
+    numberbutton.id = "numberbutton";
+    numberbutton.textContent = "開講番号でソート";
+    numberbutton.addEventListener('click',function(){
+        sort_by_number(table);
+    });
+    table.rows[0].cells[3].appendChild(numberbutton);
+
+    console.log("mainend");
+    document.getElementById("tabmenutable").appendChild(datebutton);
+    document.getElementById("tabmenutable").appendChild(numberbutton);
+    document.getElementById("tabmenutable").appendChild(titlebutton);
+    console.log("mainendddd");
+}
+
+
 function load(){
     var table;
     /*レポートの表が表示されてから処理を開始するためのやつ*/
@@ -24,7 +62,7 @@ function makearray1(table){
 
     array1 = []; /*データ入れる配列，後で二次元にする*/
 
-    for(let i = 1; i < table.rows.length; i++){ /*行のループ*/
+    for(let i = 1; i < table.rows.length-1; i++){ /*行のループ*/
         array1[i]=[] /*配列を二次元にする，行内データを入れるため*/
         for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
             array1[i][j] = table.rows[i].cells[j].innerHTML; /*ボタンがすっ飛んだりするからHTMLで取る*/
@@ -48,41 +86,46 @@ function makearray1(table){
             }
         }
     }
+    console.log(array1.length);
+    console.log(array1);
     console.log("array1 maked");
     return array1;
 }
 
 function sort_by_date(table){
+    console.log("1");
     array1 = makearray1(table);
     /*締め切り過ぎてるモノだけを別配列にコピー*/
     var array2 = [];
-    if(1){
-        for(let i = 1; i < table.rows.length; i++){ /*行のループ*/
-            array2[i]=[]; /*配列を二次元にする，行内データを入れるため*/
-            if(array1[i][table.rows[0].cells.length+2] < now){ //締め切り過ぎてたら
-                for(let j = 0; j <= table.rows[0].cells.length+2; j++){ /*行内でのループ*/
-                    array2[i][j] = array1[i][j]; //データをコピー
-                    array1[i][j] = null; //コピーしたら元配列ではnullに
-                }
-            }else{
-                for(let j = 0; j <= table.rows[0].cells.length+2; j++){ /*行内でのループ*/
-                    array2[i][j] = null;
-                }
+    for(let i = 1; i < array1.length; i++){ /*行のループ*/
+        array2[i]=[]; /*配列を二次元にする，行内データを入れるため*/
+        console.log(i);
+        if(array1[i][table.rows[0].cells.length+2] < now){ //締め切り過ぎてたら
+            for(let j = 0; j <= table.rows[0].cells.length+2; j++){ /*行内でのループ*/
+                array2[i][j] = array1[i][j]; //データをコピー
+                array1[i][j] = null; //コピーしたら元配列ではnullに
+            }
+        }else{
+            for(let j = 0; j <= table.rows[0].cells.length+2; j++){ /*行内でのループ*/
+                array2[i][j] = null;
             }
         }
     }
+    console.log("2");
+
 
     //null要素を消して詰める
     var active = array1.filter(Boolean);
     var eols = array2.filter(Boolean);
+    console.log("3");
     /*締め切り日時についてソート*/
     active.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
     eols.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
-
+    console.log("4");
     /*提出状況についてソート*/
     active.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
     eols.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
-
+    console.log("5");
     /*有効なレポートと期限切れレポートの配列をまとめる*/
     var tasks = [];
     var skip = 0;
@@ -106,20 +149,21 @@ function sort_by_date(table){
             skip++;
         }
     }
-
+    console.log("6");
     /*ソートしたデータでテーブルを書き換え*/
-    for(let i = 1; i < tasks.length; i++){
+    for(let i = 0; i < tasks.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
-            table.rows[i].cells[j].innerHTML = tasks[i][j];
+            table.rows[i+1].cells[j].innerHTML = tasks[i][j];
             /*一時保存の文字を青色に変える*/
-            if (table.rows[i].cells[j].textContent.match('一時保存')) {
-                table.rows[i].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
+            if (table.rows[i+1].cells[j].textContent.match('一時保存')) {
+                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
             }
-            if (table.rows[i].cells[j].textContent.match('Temporarily saved')) {
-                table.rows[i].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
+            if (table.rows[i+1].cells[j].textContent.match('Temporarily saved')) {
+                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
             }
         }
     }
+    console.log(tasks.length);
     console.log("sorted by date");
 }
 
@@ -137,29 +181,26 @@ function sort_by_number(table){
 
 
     /*ソートしたデータでテーブルを書き換え*/
-    for(let i = 1; i < 32; i++){
+    for(let i = 0; i < array1.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
-            table.rows[i].cells[j].innerHTML = array1[i][j];
+            table.rows[i+1].cells[j].innerHTML = array1[i][j];
             /*一時保存の文字を青色に変える*/
-            if (table.rows[i].cells[j].textContent.match('一時保存')) {
-                table.rows[i].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
+            if (table.rows[i+1].cells[j].textContent.match('一時保存')) {
+                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
             }
-            if (table.rows[i].cells[j].textContent.match('Temporarily saved')) {
-                table.rows[i].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
+            if (table.rows[i+1].cells[j].textContent.match('Temporarily saved')) {
+                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
             }
         }
     }
+    console.log(array1.length);
     console.log("sorted by number");
 }
 
 function sort_by_title(table){
     array1 = makearray1(table);
-    console.log("sort by title load")
-    console.log(array1);
-    console.log("sort by title 1");
     /*締め切り日時についてソート*/
     array1.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
-    console.log("sort by title 2");
     /*開講番号でソート*/
     array1.sort((a,b)=>{
         if(a[1] < b[1]) return -1;
@@ -167,29 +208,23 @@ function sort_by_title(table){
         return 0;
     });
 
-    console.log("sort by title 3");
 
     /*ソートしたデータでテーブルを書き換え*/
-    for(let i = 1; i < 32; i++){
-        console.log("i=",i);
+    for(let i = 0; i < array1.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
-            console.log("j=",j);
-            console.log("sort by title 4");
-            table.rows[i].cells[j].innerHTML = array1[i][j];
-            console.log("sort by title 5");
+            table.rows[i+1].cells[j].innerHTML = array1[i][j];
             /*一時保存の文字を青色に変える*/
-            if (table.rows[i].cells[j].textContent.match('一時保存')) {
-                table.rows[i].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
+            if (table.rows[i+1].cells[j].textContent.match('一時保存')) {
+                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
             }
-            console.log("sort by title 6");
-            if (table.rows[i].cells[j].textContent.match('Temporarily saved')) {
-                table.rows[i].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
+            if (table.rows[i+1].cells[j].textContent.match('Temporarily saved')) {
+                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
             }
-            console.log("sort by title 7");
         }
-        console.log("sort by title 8");
     }
+    console.log(array1.length);
     console.log("sorted by title");
+    main();
 }
 
 function getdate(){
@@ -218,37 +253,4 @@ function getdate(){
     }
 
     return Year.toString() + Month.toString() + Dates.toString() + Hour.toString() + Min.toString();
-}
-
-function main(){
-
-    table = load();
-
-    array1 = makearray1(table);
-
-    titlebutton = document.createElement("button");
-    titlebutton.id = "titlebutton";
-    titlebutton.textContent = "▼";
-    titlebutton.addEventListener('click',function(){
-        sort_by_title(table);
-    });
-    table.rows[0].cells[1].appendChild(titlebutton);
-
-    datebutton = document.createElement("button");
-    datebutton.id = "datebutton";
-    datebutton.textContent = "▼";
-    datebutton.addEventListener('click',function(){
-        sort_by_date(table);
-    });
-    table.rows[0].cells[7].appendChild(datebutton);
-
-    numberbutton = document.createElement("button");
-    numberbutton.id = "numberbutton";
-    numberbutton.textContent = "▼";
-    numberbutton.addEventListener('click',function(){
-        sort_by_number(table);
-    });
-    table.rows[0].cells[3].appendChild(numberbutton);
-
-    console.log(table.rows.length);
 }
