@@ -16,6 +16,7 @@
 ## レポートのソート
 ![レポート画面のボタン](https://github.com/koji-genba/gakujo-chan-extender/blob/Readme_images/report_firefox.png)  
 レポート提出の画面を開きますとこんな感じにボタンが追加されてます．ボタンを押すと書いてある感じにソートします．使えばわかる．  
+ボタン押さなくても提出期間でソートします．  
 ついでにぱっと見分かりにくいことに定評のある一時保存さんを青字で表示することにより分かりやすくします．
 ### 提出期間でソート
 期限内  
@@ -57,7 +58,8 @@ https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdof
 何もしなくても勝手に時間を延長してくれます．
 
 ## レポートソーティング
-ボタンを押しなさい．
+ボタンを押しなさい．  
+押さなくても提出期間でソートされますけどね．
 
 ## GPA
 ### 計算
