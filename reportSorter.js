@@ -1,7 +1,7 @@
 window.addEventListener("load", second, false);
 
 function second(){
-    setTimeout(main,1500);
+    setTimeout(main,1000);
 }
 
 function main(){
@@ -34,7 +34,18 @@ function main(){
     document.getElementById("tabmenutable").appendChild(datebutton);
     document.getElementById("tabmenutable").appendChild(numberbutton);
     document.getElementById("tabmenutable").appendChild(titlebutton);
+
+    for(let i = 0; i < table.rows.length; i++){
+        /*一時保存の文字を青色に変える*/
+        if (table.rows[i].cells[2].textContent.match('一時保存')) {
+            table.rows[i].cells[2].innerHTML = "<font color=\"blue\">一時保存</font>";
+        }
+        if (table.rows[i].cells[2].textContent.match('Temporarily saved')) {
+            table.rows[i].cells[2].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
+        }
+    }
 }
+
 
 
 function load(){
@@ -135,13 +146,6 @@ function sort_by_date(table){
     for(let i = 0; i < tasks.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
             table.rows[i+1].cells[j].innerHTML = tasks[i][j];
-            /*一時保存の文字を青色に変える*/
-            if (table.rows[i+1].cells[j].textContent.match('一時保存')) {
-                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
-            }
-            if (table.rows[i+1].cells[j].textContent.match('Temporarily saved')) {
-                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
-            }
         }
     }
 }
@@ -163,13 +167,6 @@ function sort_by_number(table){
     for(let i = 0; i < array1.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
             table.rows[i+1].cells[j].innerHTML = array1[i][j];
-            /*一時保存の文字を青色に変える*/
-            if (table.rows[i+1].cells[j].textContent.match('一時保存')) {
-                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
-            }
-            if (table.rows[i+1].cells[j].textContent.match('Temporarily saved')) {
-                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
-            }
         }
     }
 }
@@ -190,16 +187,8 @@ function sort_by_title(table){
     for(let i = 0; i < array1.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
             table.rows[i+1].cells[j].innerHTML = array1[i][j];
-            /*一時保存の文字を青色に変える*/
-            if (table.rows[i+1].cells[j].textContent.match('一時保存')) {
-                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">一時保存</font>";
-            }
-            if (table.rows[i+1].cells[j].textContent.match('Temporarily saved')) {
-                table.rows[i+1].cells[j].innerHTML = "<font color=\"blue\">Temporarily saved</font>";
-            }
         }
     }
-    main();
 }
 
 function getdate(){
