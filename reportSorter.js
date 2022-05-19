@@ -176,7 +176,7 @@ function sort_by_title(table){
     array1 = makearray1(table);
     /*締め切り日時についてソート*/
     array1.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
-    /*開講番号でソート*/
+    /*タイトルでソート*/
     array1.sort((a,b)=>{
         if(a[1] < b[1]) return -1;
         else if(a[1] > b[1]) return 1;
