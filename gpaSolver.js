@@ -94,7 +94,7 @@ function sort_by_No(){
     for(let i = 1; i < table.rows.length; i++){ /*行のループ*/
         array1[i]=[] /*配列を二次元にする，行内データを入れるため*/
         for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
-            array1[i][j] = table.rows[i].cells[j].textContent;
+            array1[i][j] = table.rows[i].cells[j].innerHTML;
         }
     }
     /*No.でソート*/
@@ -104,7 +104,7 @@ function sort_by_No(){
     /*ソートしたデータでテーブルを書き換え*/
     for(let i = 0; i < array1.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
-            table.rows[i+1].cells[j].textContent = array1[i][j];
+            table.rows[i+1].cells[j].innerHTML = array1[i][j];
         }
     }
     console.log(array1.length);
@@ -118,19 +118,20 @@ function sort_by_opennum(){
     for(let i = 1; i < table.rows.length; i++){ /*行のループ*/
         array1[i]=[] /*配列を二次元にする，行内データを入れるため*/
         for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
-            array1[i][j] = table.rows[i].cells[j].textContent;
+            array1[i][j] = table.rows[i].cells[j].innerHTML;
         }
+        array1[i][table.rows[0].cells.length+1] = table.rows[i].cells[3].textContent
     }
     /*開講番号でソート*/
     array1.sort((a,b)=>{
-        if(a[3] < b[3]) return -1;
-        else if(a[3] > b[3]) return 1;
+        if(a[table.rows[0].cells.length+1] < b[table.rows[0].cells.length+1]) return -1;
+        else if(a[table.rows[0].cells.length+1] > b[table.rows[0].cells.length+1]) return 1;
         return 0;
     });
     /*ソートしたデータでテーブルを書き換え*/
     for(let i = 0; i < array1.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
-            table.rows[i+1].cells[j].textContent = array1[i][j];
+            table.rows[i+1].cells[j].innerHTML = array1[i][j];
         }
     }
     console.log(array1.length);
@@ -144,7 +145,7 @@ function sort_by_score(){
     for(let i = 1; i < table.rows.length; i++){ /*行のループ*/
         array1[i]=[] /*配列を二次元にする，行内データを入れるため*/
         for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
-            array1[i][j] = table.rows[i].cells[j].textContent;
+            array1[i][j] = table.rows[i].cells[j].innerHTML;
             console.log(array1[i][9]);
         }
     }
@@ -155,7 +156,7 @@ function sort_by_score(){
     /*ソートしたデータでテーブルを書き換え*/
     for(let i = 0; i < array1.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
-            table.rows[i+1].cells[j].textContent = array1[i][j];
+            table.rows[i+1].cells[j].innerHTML = array1[i][j];
         }
     }
     console.log(array1.length);
