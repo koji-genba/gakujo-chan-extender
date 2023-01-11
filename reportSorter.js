@@ -65,7 +65,7 @@ function makearray1(table){
 
     array1 = []; /*データ入れる配列，後で二次元にする*/
 
-    for(let i = 1; i < table.rows.length-1; i++){ /*行のループ*/
+    for(let i = 1; i < table.rows.length; i++){ /*行のループ*/
         array1[i]=[] /*配列を二次元にする，行内データを入れるため*/
         for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
             array1[i][j] = table.rows[i].cells[j].innerHTML; /*ボタンがすっ飛んだりするからHTMLで取る*/
