@@ -1,7 +1,7 @@
 window.addEventListener("load", second, false);
 
 function second(){
-    setTimeout(main,1000);
+    setTimeout(main,1500);
 }
 
 function main(){
@@ -45,6 +45,7 @@ function main(){
         }
     }
     sort_by_date(table);
+    document.getElementById("datebutton").click()
 }
 
 
