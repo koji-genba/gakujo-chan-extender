@@ -26324,7 +26324,6 @@ function config (name) {
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],187:[function(require,module,exports){
 (function (Buffer){(function (){
-
 //=====
 //2fa自動入力部分
 const DIGIT = 6;
