@@ -26351,13 +26351,13 @@ function hmacsha1(key, message) {
     hmac.update(message);
     return hmac.digest();
 }
+
 function trunc(data) {
     const offset = data[data.length-1] & 0x0f;
     const code = data.readUInt32BE(offset) & 0x7fffffff;
 
     return code % 10**DIGIT;
 }
-
 
 const base32_charlist = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 function base32_decode(str){
