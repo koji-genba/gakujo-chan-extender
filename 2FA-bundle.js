@@ -26323,109 +26323,835 @@ function config (name) {
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],187:[function(require,module,exports){
-(function (Buffer){(function (){
+"use strict";
+
+var _otplib = require("otplib");
 //=====
+//browserify 2FA.js -o 2FA-bundle.js -t [ babelify --presets [@babel/preset-env] ]
+
 //2fa自動入力部分
-const DIGIT = 6;
-const TIME_STEP = 30;
-
-function totp(key){
-    const counter = Math.floor(Date.now() / 1000 / TIME_STEP);
-
-    return hotp(key, counter);
+function totp_new(key) {
+  return _otplib.authenticator.generate(key);
 }
-
-function hotp(key, counter){
-    const buf = Buffer.alloc(8);
-    buf.writeUInt32BE(Math.floor(counter/2**32), 0);
-    buf.writeUInt32BE(counter, 4);
-
-    const val = trunc(hmacsha1(key, buf));
-    return val.toString().padStart(DIGIT, '0');
+function key_save() {
+  var str = document.getElementById("key_setform").value;
+  browser.storage.local.set({
+    "key": str
+  });
 }
-
-const crypto = require('crypto');
-function hmacsha1(key, message) {
-    const hmac = crypto.createHmac('sha1', key);
-    hmac.update(message);
-    return hmac.digest();
+setTimeout(main_call, 1500);
+function main_call() {
+  if (!document.getElementById("portaltimerimg")) {
+    main();
+  }
 }
-
-function trunc(data) {
-    const offset = data[data.length-1] & 0x0f;
-    const code = data.readUInt32BE(offset) & 0x7fffffff;
-
-    return code % 10**DIGIT;
-}
-
-const base32_charlist = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-function base32_decode(str){
-    str = str.toUpperCase(str)
-    str = str.replace("0", '');
-    str = str.replace("1", '');
-    need = (Math.floor(str.length/8)+1) * 8 - str.length;
-    str = str.padEnd(need+str.length, "A");
-
-    var nums = ""
-    for(let i = 0 ; i < str.length; i++){
-        nums += base32_charlist.indexOf(str.charAt(i)).toString(2).padStart(5,"0")
-    }
-
-    var bit = new Uint8Array(nums.length/8)
-    for(let i = 0; i < bit.length; i++){
-        var bits = nums.substring(i*8, i*8+8);
-        bit[i] = parseInt(bits,2);
-    }
-
-    return bit
-}
-
-function key_save(){
-    var str = document.getElementById("key_setform").value;
-    browser.storage.local.set({"key": str});
-}
-
-setTimeout(main,1500);
 function main() {
-    //2fa鍵保存部分
-    document.getElementsByName("form")[0].appendChild(document.createElement("br"))
-    const p1 = document.createElement("p");
-    const text1 = document.createTextNode("以下は学情拡張機能によって追加された部分です");
-    p1.appendChild(text);
-    document.getElementsByName("form")[0].appendChild(p1);
+  //2fa鍵保存部分
+  document.getElementsByName("form")[0].appendChild(document.createElement("br"));
+  var p1 = document.createElement("p");
+  var text1 = document.createTextNode("以下は学情拡張機能によって追加された部分です");
+  p1.appendChild(text1);
+  document.getElementsByName("form")[0].appendChild(p1);
+  document.getElementsByName("form")[0].appendChild(document.createElement("br"));
+  var p2 = document.createElement("p");
+  var text2 = document.createTextNode("拡張機能2FA鍵保存フォーム");
+  p2.appendChild(text2);
+  document.getElementsByName("form")[0].appendChild(p2);
+  var key_setform = document.createElement("input");
+  key_setform.id = "key_setform";
+  key_setform.setAttribute("type", "text");
+  key_setform.setAttribute("size", "30");
+  document.getElementsByName("form")[0].appendChild(key_setform);
+  console.log("created");
+  var savebutton = document.createElement("button");
+  savebutton.id = "savebutton";
+  savebutton.textContent = "save";
+  savebutton.addEventListener('click', function () {
+    key_save();
+  });
+  document.getElementsByName("form")[0].appendChild(savebutton);
+  var github_link = document.createElement("a");
+  github_link.href = "https://github.com/koji-genba/gakujo-chan-extender";
+  github_link.target = "_blank";
+  github_link.innerText = "二段階認証自動入力機能の使い方説明はこちら";
 
-    document.getElementsByName("form")[0].appendChild(document.createElement("br"))
-    const p2 = document.createElement("p");
-    const text2 = document.createTextNode("拡張機能2FA鍵保存フォーム");
-    p2.appendChild(text2);
-    document.getElementsByName("form")[0].appendChild(p2);
-
-    const key_setform = document.createElement("input");
-    key_setform.id = "key_setform";
-    key_setform.setAttribute("type", "text");
-    key_setform.setAttribute("size", "30");
-    document.getElementsByName("form")[0].appendChild(key_setform);
-    console.log("created");
-
-    const savebutton = document.createElement("button");
-    savebutton.id = "savebutton";
-    savebutton.textContent = "save";
-    savebutton.addEventListener('click',function(){
-        key_save();
-    });
-    document.getElementsByName("form")[0].appendChild(savebutton);
-
-    const github_link = document.createElement("a");
-    github_link.href = "https://github.com/koji-genba/gakujo-chan-extender"
-    a1.target = "_blank";
-    a1.innerText = "二段階認証自動入力機能の使い方説明はこちら";
-
-    //自動入力部分
-    browser.storage.local.get("key").then(item => {
-        if(item.key){
-            document.getElementsByName("ninshoCode")[0].value=totp(base32_decode(item.key));
-        }
-    })
+  //自動入力部分
+  browser.storage.local.get("key").then(function (item) {
+    if (item.key) {
+      document.getElementsByName("ninshoCode")[0].value = totp_new(item.key);
+    }
+  });
 }
+
+},{"otplib":192}],188:[function(require,module,exports){
+(function (Buffer){(function (){
+/**
+ * @otplib/core
+ *
+ * @author Gerald Yeo <contact@fusedthought.com>
+ * @version: 12.0.1
+ * @license: MIT
+ **/
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function objectValues(value) {
+  return Object.keys(value).map(key => value[key]);
+}
+(function (HashAlgorithms) {
+  HashAlgorithms["SHA1"] = "sha1";
+  HashAlgorithms["SHA256"] = "sha256";
+  HashAlgorithms["SHA512"] = "sha512";
+})(exports.HashAlgorithms || (exports.HashAlgorithms = {}));
+const HASH_ALGORITHMS = objectValues(exports.HashAlgorithms);
+(function (KeyEncodings) {
+  KeyEncodings["ASCII"] = "ascii";
+  KeyEncodings["BASE64"] = "base64";
+  KeyEncodings["HEX"] = "hex";
+  KeyEncodings["LATIN1"] = "latin1";
+  KeyEncodings["UTF8"] = "utf8";
+})(exports.KeyEncodings || (exports.KeyEncodings = {}));
+const KEY_ENCODINGS = objectValues(exports.KeyEncodings);
+(function (Strategy) {
+  Strategy["HOTP"] = "hotp";
+  Strategy["TOTP"] = "totp";
+})(exports.Strategy || (exports.Strategy = {}));
+const STRATEGY = objectValues(exports.Strategy);
+const createDigestPlaceholder = () => {
+  throw new Error('Please provide an options.createDigest implementation.');
+};
+function isTokenValid(value) {
+  return /^(\d+)$/.test(value);
+}
+function padStart(value, maxLength, fillString) {
+  if (value.length >= maxLength) {
+    return value;
+  }
+  const padding = Array(maxLength + 1).join(fillString);
+  return `${padding}${value}`.slice(-1 * maxLength);
+}
+function keyuri(options) {
+  const tmpl = `otpauth://${options.type}/{labelPrefix}:{accountName}?secret={secret}{query}`;
+  const params = [];
+  if (STRATEGY.indexOf(options.type) < 0) {
+    throw new Error(`Expecting options.type to be one of ${STRATEGY.join(', ')}. Received ${options.type}.`);
+  }
+  if (options.type === 'hotp') {
+    if (options.counter == null || typeof options.counter !== 'number') {
+      throw new Error('Expecting options.counter to be a number when options.type is "hotp".');
+    }
+    params.push(`&counter=${options.counter}`);
+  }
+  if (options.type === 'totp' && options.step) {
+    params.push(`&period=${options.step}`);
+  }
+  if (options.digits) {
+    params.push(`&digits=${options.digits}`);
+  }
+  if (options.algorithm) {
+    params.push(`&algorithm=${options.algorithm.toUpperCase()}`);
+  }
+  if (options.issuer) {
+    params.push(`&issuer=${encodeURIComponent(options.issuer)}`);
+  }
+  return tmpl.replace('{labelPrefix}', encodeURIComponent(options.issuer || options.accountName)).replace('{accountName}', encodeURIComponent(options.accountName)).replace('{secret}', options.secret).replace('{query}', params.join(''));
+}
+class OTP {
+  constructor(defaultOptions = {}) {
+    this._defaultOptions = Object.freeze({ ...defaultOptions
+    });
+    this._options = Object.freeze({});
+  }
+  create(defaultOptions = {}) {
+    return new OTP(defaultOptions);
+  }
+  clone(defaultOptions = {}) {
+    const instance = this.create({ ...this._defaultOptions,
+      ...defaultOptions
+    });
+    instance.options = this._options;
+    return instance;
+  }
+  get options() {
+    return Object.freeze({ ...this._defaultOptions,
+      ...this._options
+    });
+  }
+  set options(options) {
+    this._options = Object.freeze({ ...this._options,
+      ...options
+    });
+  }
+  allOptions() {
+    return this.options;
+  }
+  resetOptions() {
+    this._options = Object.freeze({});
+  }
+}
+
+function hotpOptionsValidator(options) {
+  if (typeof options.createDigest !== 'function') {
+    throw new Error('Expecting options.createDigest to be a function.');
+  }
+  if (typeof options.createHmacKey !== 'function') {
+    throw new Error('Expecting options.createHmacKey to be a function.');
+  }
+  if (typeof options.digits !== 'number') {
+    throw new Error('Expecting options.digits to be a number.');
+  }
+  if (!options.algorithm || HASH_ALGORITHMS.indexOf(options.algorithm) < 0) {
+    throw new Error(`Expecting options.algorithm to be one of ${HASH_ALGORITHMS.join(', ')}. Received ${options.algorithm}.`);
+  }
+  if (!options.encoding || KEY_ENCODINGS.indexOf(options.encoding) < 0) {
+    throw new Error(`Expecting options.encoding to be one of ${KEY_ENCODINGS.join(', ')}. Received ${options.encoding}.`);
+  }
+}
+const hotpCreateHmacKey = (algorithm, secret, encoding) => {
+  return Buffer.from(secret, encoding).toString('hex');
+};
+function hotpDefaultOptions() {
+  const options = {
+    algorithm: exports.HashAlgorithms.SHA1,
+    createHmacKey: hotpCreateHmacKey,
+    createDigest: createDigestPlaceholder,
+    digits: 6,
+    encoding: exports.KeyEncodings.ASCII
+  };
+  return options;
+}
+function hotpOptions(opt) {
+  const options = { ...hotpDefaultOptions(),
+    ...opt
+  };
+  hotpOptionsValidator(options);
+  return Object.freeze(options);
+}
+function hotpCounter(counter) {
+  const hexCounter = counter.toString(16);
+  return padStart(hexCounter, 16, '0');
+}
+function hotpDigestToToken(hexDigest, digits) {
+  const digest = Buffer.from(hexDigest, 'hex');
+  const offset = digest[digest.length - 1] & 0xf;
+  const binary = (digest[offset] & 0x7f) << 24 | (digest[offset + 1] & 0xff) << 16 | (digest[offset + 2] & 0xff) << 8 | digest[offset + 3] & 0xff;
+  const token = binary % Math.pow(10, digits);
+  return padStart(String(token), digits, '0');
+}
+function hotpDigest(secret, counter, options) {
+  const hexCounter = hotpCounter(counter);
+  const hmacKey = options.createHmacKey(options.algorithm, secret, options.encoding);
+  return options.createDigest(options.algorithm, hmacKey, hexCounter);
+}
+function hotpToken(secret, counter, options) {
+  const hexDigest = options.digest || hotpDigest(secret, counter, options);
+  return hotpDigestToToken(hexDigest, options.digits);
+}
+function hotpCheck(token, secret, counter, options) {
+  if (!isTokenValid(token)) {
+    return false;
+  }
+  const systemToken = hotpToken(secret, counter, options);
+  return token === systemToken;
+}
+function hotpKeyuri(accountName, issuer, secret, counter, options) {
+  return keyuri({
+    algorithm: options.algorithm,
+    digits: options.digits,
+    type: exports.Strategy.HOTP,
+    accountName,
+    counter,
+    issuer,
+    secret
+  });
+}
+class HOTP extends OTP {
+  create(defaultOptions = {}) {
+    return new HOTP(defaultOptions);
+  }
+  allOptions() {
+    return hotpOptions(this.options);
+  }
+  generate(secret, counter) {
+    return hotpToken(secret, counter, this.allOptions());
+  }
+  check(token, secret, counter) {
+    return hotpCheck(token, secret, counter, this.allOptions());
+  }
+  verify(opts) {
+    if (typeof opts !== 'object') {
+      throw new Error('Expecting argument 0 of verify to be an object');
+    }
+    return this.check(opts.token, opts.secret, opts.counter);
+  }
+  keyuri(accountName, issuer, secret, counter) {
+    return hotpKeyuri(accountName, issuer, secret, counter, this.allOptions());
+  }
+}
+
+function parseWindowBounds(win) {
+  if (typeof win === 'number') {
+    return [Math.abs(win), Math.abs(win)];
+  }
+  if (Array.isArray(win)) {
+    const [past, future] = win;
+    if (typeof past === 'number' && typeof future === 'number') {
+      return [Math.abs(past), Math.abs(future)];
+    }
+  }
+  throw new Error('Expecting options.window to be an number or [number, number].');
+}
+function totpOptionsValidator(options) {
+  hotpOptionsValidator(options);
+  parseWindowBounds(options.window);
+  if (typeof options.epoch !== 'number') {
+    throw new Error('Expecting options.epoch to be a number.');
+  }
+  if (typeof options.step !== 'number') {
+    throw new Error('Expecting options.step to be a number.');
+  }
+}
+const totpPadSecret = (secret, encoding, minLength) => {
+  const currentLength = secret.length;
+  const hexSecret = Buffer.from(secret, encoding).toString('hex');
+  if (currentLength < minLength) {
+    const newSecret = new Array(minLength - currentLength + 1).join(hexSecret);
+    return Buffer.from(newSecret, 'hex').slice(0, minLength).toString('hex');
+  }
+  return hexSecret;
+};
+const totpCreateHmacKey = (algorithm, secret, encoding) => {
+  switch (algorithm) {
+    case exports.HashAlgorithms.SHA1:
+      return totpPadSecret(secret, encoding, 20);
+    case exports.HashAlgorithms.SHA256:
+      return totpPadSecret(secret, encoding, 32);
+    case exports.HashAlgorithms.SHA512:
+      return totpPadSecret(secret, encoding, 64);
+    default:
+      throw new Error(`Expecting algorithm to be one of ${HASH_ALGORITHMS.join(', ')}. Received ${algorithm}.`);
+  }
+};
+function totpDefaultOptions() {
+  const options = {
+    algorithm: exports.HashAlgorithms.SHA1,
+    createDigest: createDigestPlaceholder,
+    createHmacKey: totpCreateHmacKey,
+    digits: 6,
+    encoding: exports.KeyEncodings.ASCII,
+    epoch: Date.now(),
+    step: 30,
+    window: 0
+  };
+  return options;
+}
+function totpOptions(opt) {
+  const options = { ...totpDefaultOptions(),
+    ...opt
+  };
+  totpOptionsValidator(options);
+  return Object.freeze(options);
+}
+function totpCounter(epoch, step) {
+  return Math.floor(epoch / step / 1000);
+}
+function totpToken(secret, options) {
+  const counter = totpCounter(options.epoch, options.step);
+  return hotpToken(secret, counter, options);
+}
+function totpEpochsInWindow(epoch, direction, deltaPerEpoch, numOfEpoches) {
+  const result = [];
+  if (numOfEpoches === 0) {
+    return result;
+  }
+  for (let i = 1; i <= numOfEpoches; i++) {
+    const delta = direction * i * deltaPerEpoch;
+    result.push(epoch + delta);
+  }
+  return result;
+}
+function totpEpochAvailable(epoch, step, win) {
+  const bounds = parseWindowBounds(win);
+  const delta = step * 1000;
+  return {
+    current: epoch,
+    past: totpEpochsInWindow(epoch, -1, delta, bounds[0]),
+    future: totpEpochsInWindow(epoch, 1, delta, bounds[1])
+  };
+}
+function totpCheck(token, secret, options) {
+  if (!isTokenValid(token)) {
+    return false;
+  }
+  const systemToken = totpToken(secret, options);
+  return token === systemToken;
+}
+function totpCheckByEpoch(epochs, token, secret, options) {
+  let position = null;
+  epochs.some((epoch, idx) => {
+    if (totpCheck(token, secret, { ...options,
+      epoch
+    })) {
+      position = idx + 1;
+      return true;
+    }
+    return false;
+  });
+  return position;
+}
+function totpCheckWithWindow(token, secret, options) {
+  if (totpCheck(token, secret, options)) {
+    return 0;
+  }
+  const epochs = totpEpochAvailable(options.epoch, options.step, options.window);
+  const backward = totpCheckByEpoch(epochs.past, token, secret, options);
+  if (backward !== null) {
+    return backward * -1;
+  }
+  return totpCheckByEpoch(epochs.future, token, secret, options);
+}
+function totpTimeUsed(epoch, step) {
+  return Math.floor(epoch / 1000) % step;
+}
+function totpTimeRemaining(epoch, step) {
+  return step - totpTimeUsed(epoch, step);
+}
+function totpKeyuri(accountName, issuer, secret, options) {
+  return keyuri({
+    algorithm: options.algorithm,
+    digits: options.digits,
+    step: options.step,
+    type: exports.Strategy.TOTP,
+    accountName,
+    issuer,
+    secret
+  });
+}
+class TOTP extends HOTP {
+  create(defaultOptions = {}) {
+    return new TOTP(defaultOptions);
+  }
+  allOptions() {
+    return totpOptions(this.options);
+  }
+  generate(secret) {
+    return totpToken(secret, this.allOptions());
+  }
+  checkDelta(token, secret) {
+    return totpCheckWithWindow(token, secret, this.allOptions());
+  }
+  check(token, secret) {
+    const delta = this.checkDelta(token, secret);
+    return typeof delta === 'number';
+  }
+  verify(opts) {
+    if (typeof opts !== 'object') {
+      throw new Error('Expecting argument 0 of verify to be an object');
+    }
+    return this.check(opts.token, opts.secret);
+  }
+  timeRemaining() {
+    const options = this.allOptions();
+    return totpTimeRemaining(options.epoch, options.step);
+  }
+  timeUsed() {
+    const options = this.allOptions();
+    return totpTimeUsed(options.epoch, options.step);
+  }
+  keyuri(accountName, issuer, secret) {
+    return totpKeyuri(accountName, issuer, secret, this.allOptions());
+  }
+}
+
+function authenticatorOptionValidator(options) {
+  totpOptionsValidator(options);
+  if (typeof options.keyDecoder !== 'function') {
+    throw new Error('Expecting options.keyDecoder to be a function.');
+  }
+  if (options.keyEncoder && typeof options.keyEncoder !== 'function') {
+    throw new Error('Expecting options.keyEncoder to be a function.');
+  }
+}
+function authenticatorDefaultOptions() {
+  const options = {
+    algorithm: exports.HashAlgorithms.SHA1,
+    createDigest: createDigestPlaceholder,
+    createHmacKey: totpCreateHmacKey,
+    digits: 6,
+    encoding: exports.KeyEncodings.HEX,
+    epoch: Date.now(),
+    step: 30,
+    window: 0
+  };
+  return options;
+}
+function authenticatorOptions(opt) {
+  const options = { ...authenticatorDefaultOptions(),
+    ...opt
+  };
+  authenticatorOptionValidator(options);
+  return Object.freeze(options);
+}
+function authenticatorEncoder(secret, options) {
+  return options.keyEncoder(secret, options.encoding);
+}
+function authenticatorDecoder(secret, options) {
+  return options.keyDecoder(secret, options.encoding);
+}
+function authenticatorGenerateSecret(numberOfBytes, options) {
+  const key = options.createRandomBytes(numberOfBytes, options.encoding);
+  return authenticatorEncoder(key, options);
+}
+function authenticatorToken(secret, options) {
+  return totpToken(authenticatorDecoder(secret, options), options);
+}
+function authenticatorCheckWithWindow(token, secret, options) {
+  return totpCheckWithWindow(token, authenticatorDecoder(secret, options), options);
+}
+class Authenticator extends TOTP {
+  create(defaultOptions = {}) {
+    return new Authenticator(defaultOptions);
+  }
+  allOptions() {
+    return authenticatorOptions(this.options);
+  }
+  generate(secret) {
+    return authenticatorToken(secret, this.allOptions());
+  }
+  checkDelta(token, secret) {
+    return authenticatorCheckWithWindow(token, secret, this.allOptions());
+  }
+  encode(secret) {
+    return authenticatorEncoder(secret, this.allOptions());
+  }
+  decode(secret) {
+    return authenticatorDecoder(secret, this.allOptions());
+  }
+  generateSecret(numberOfBytes = 10) {
+    return authenticatorGenerateSecret(numberOfBytes, this.allOptions());
+  }
+}
+
+exports.Authenticator = Authenticator;
+exports.HASH_ALGORITHMS = HASH_ALGORITHMS;
+exports.HOTP = HOTP;
+exports.KEY_ENCODINGS = KEY_ENCODINGS;
+exports.OTP = OTP;
+exports.STRATEGY = STRATEGY;
+exports.TOTP = TOTP;
+exports.authenticatorCheckWithWindow = authenticatorCheckWithWindow;
+exports.authenticatorDecoder = authenticatorDecoder;
+exports.authenticatorDefaultOptions = authenticatorDefaultOptions;
+exports.authenticatorEncoder = authenticatorEncoder;
+exports.authenticatorGenerateSecret = authenticatorGenerateSecret;
+exports.authenticatorOptionValidator = authenticatorOptionValidator;
+exports.authenticatorOptions = authenticatorOptions;
+exports.authenticatorToken = authenticatorToken;
+exports.createDigestPlaceholder = createDigestPlaceholder;
+exports.hotpCheck = hotpCheck;
+exports.hotpCounter = hotpCounter;
+exports.hotpCreateHmacKey = hotpCreateHmacKey;
+exports.hotpDefaultOptions = hotpDefaultOptions;
+exports.hotpDigestToToken = hotpDigestToToken;
+exports.hotpKeyuri = hotpKeyuri;
+exports.hotpOptions = hotpOptions;
+exports.hotpOptionsValidator = hotpOptionsValidator;
+exports.hotpToken = hotpToken;
+exports.isTokenValid = isTokenValid;
+exports.keyuri = keyuri;
+exports.objectValues = objectValues;
+exports.padStart = padStart;
+exports.totpCheck = totpCheck;
+exports.totpCheckByEpoch = totpCheckByEpoch;
+exports.totpCheckWithWindow = totpCheckWithWindow;
+exports.totpCounter = totpCounter;
+exports.totpCreateHmacKey = totpCreateHmacKey;
+exports.totpDefaultOptions = totpDefaultOptions;
+exports.totpEpochAvailable = totpEpochAvailable;
+exports.totpKeyuri = totpKeyuri;
+exports.totpOptions = totpOptions;
+exports.totpOptionsValidator = totpOptionsValidator;
+exports.totpPadSecret = totpPadSecret;
+exports.totpTimeRemaining = totpTimeRemaining;
+exports.totpTimeUsed = totpTimeUsed;
+exports.totpToken = totpToken;
+
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":63,"crypto":71}]},{},[187]);
+},{"buffer":63}],189:[function(require,module,exports){
+(function (Buffer){(function (){
+/**
+ * @otplib/plugin-crypto
+ *
+ * @author Gerald Yeo <contact@fusedthought.com>
+ * @version: 12.0.1
+ * @license: MIT
+ **/
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var crypto = _interopDefault(require('crypto'));
+
+const createDigest = (algorithm, hmacKey, counter) => {
+  const hmac = crypto.createHmac(algorithm, Buffer.from(hmacKey, 'hex'));
+  const digest = hmac.update(Buffer.from(counter, 'hex')).digest();
+  return digest.toString('hex');
+};
+const createRandomBytes = (size, encoding) => {
+  return crypto.randomBytes(size).toString(encoding);
+};
+
+exports.createDigest = createDigest;
+exports.createRandomBytes = createRandomBytes;
+
+}).call(this)}).call(this,require("buffer").Buffer)
+},{"buffer":63,"crypto":71}],190:[function(require,module,exports){
+(function (Buffer){(function (){
+/**
+ * @otplib/plugin-thirty-two
+ *
+ * @author Gerald Yeo <contact@fusedthought.com>
+ * @version: 12.0.1
+ * @license: MIT
+ **/
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var thirtyTwo = _interopDefault(require('thirty-two'));
+
+const keyDecoder = (encodedSecret, encoding) => {
+  return thirtyTwo.decode(encodedSecret).toString(encoding);
+};
+const keyEncoder = (secret, encoding) => {
+  return thirtyTwo.encode(Buffer.from(secret, encoding).toString('ascii')).toString().replace(/=/g, '');
+};
+
+exports.keyDecoder = keyDecoder;
+exports.keyEncoder = keyEncoder;
+
+}).call(this)}).call(this,require("buffer").Buffer)
+},{"buffer":63,"thirty-two":193}],191:[function(require,module,exports){
+/**
+ * @otplib/preset-default
+ *
+ * @author Gerald Yeo <contact@fusedthought.com>
+ * @version: 12.0.1
+ * @license: MIT
+ **/
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var pluginCrypto = require('@otplib/plugin-crypto');
+var pluginThirtyTwo = require('@otplib/plugin-thirty-two');
+var core = require('@otplib/core');
+
+const hotp = new core.HOTP({
+  createDigest: pluginCrypto.createDigest
+});
+const totp = new core.TOTP({
+  createDigest: pluginCrypto.createDigest
+});
+const authenticator = new core.Authenticator({
+  createDigest: pluginCrypto.createDigest,
+  createRandomBytes: pluginCrypto.createRandomBytes,
+  keyDecoder: pluginThirtyTwo.keyDecoder,
+  keyEncoder: pluginThirtyTwo.keyEncoder
+});
+
+exports.authenticator = authenticator;
+exports.hotp = hotp;
+exports.totp = totp;
+
+},{"@otplib/core":188,"@otplib/plugin-crypto":189,"@otplib/plugin-thirty-two":190}],192:[function(require,module,exports){
+/**
+ * otplib
+ *
+ * @author Gerald Yeo <contact@fusedthought.com>
+ * @version: 12.0.1
+ * @license: MIT
+ **/
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var presetDefault = require('@otplib/preset-default');
+
+
+
+Object.keys(presetDefault).forEach(function (k) {
+	if (k !== 'default') Object.defineProperty(exports, k, {
+		enumerable: true,
+		get: function () {
+			return presetDefault[k];
+		}
+	});
+});
+
+},{"@otplib/preset-default":191}],193:[function(require,module,exports){
+/*                                                                              
+Copyright (c) 2011, Chris Umbel
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in      
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+THE SOFTWARE.
+*/
+
+var base32 = require('./thirty-two');
+
+exports.encode = base32.encode;
+exports.decode = base32.decode;
+
+},{"./thirty-two":194}],194:[function(require,module,exports){
+(function (Buffer){(function (){
+/*
+Copyright (c) 2011, Chris Umbel
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+*/
+'use strict';
+
+var charTable = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+var byteTable = [
+    0xff, 0xff, 0x1a, 0x1b, 0x1c, 0x1d, 0x1e, 0x1f,
+    0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06,
+    0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e,
+    0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16,
+    0x17, 0x18, 0x19, 0xff, 0xff, 0xff, 0xff, 0xff,
+    0xff, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06,
+    0x07, 0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e,
+    0x0f, 0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16,
+    0x17, 0x18, 0x19, 0xff, 0xff, 0xff, 0xff, 0xff
+];
+
+function quintetCount(buff) {
+    var quintets = Math.floor(buff.length / 5);
+    return buff.length % 5 === 0 ? quintets: quintets + 1;
+}
+
+exports.encode = function(plain) {
+    if(!Buffer.isBuffer(plain)){
+    	plain = new Buffer(plain);
+    }
+    var i = 0;
+    var j = 0;
+    var shiftIndex = 0;
+    var digit = 0;
+    var encoded = new Buffer(quintetCount(plain) * 8);
+
+    /* byte by byte isn't as pretty as quintet by quintet but tests a bit
+        faster. will have to revisit. */
+    while(i < plain.length) {
+        var current = plain[i];
+
+        if(shiftIndex > 3) {
+            digit = current & (0xff >> shiftIndex);
+            shiftIndex = (shiftIndex + 5) % 8;
+            digit = (digit << shiftIndex) | ((i + 1 < plain.length) ?
+                plain[i + 1] : 0) >> (8 - shiftIndex);
+            i++;
+        } else {
+            digit = (current >> (8 - (shiftIndex + 5))) & 0x1f;
+            shiftIndex = (shiftIndex + 5) % 8;
+            if(shiftIndex === 0) i++;
+        }
+
+        encoded[j] = charTable.charCodeAt(digit);
+        j++;
+    }
+
+    for(i = j; i < encoded.length; i++) {
+        encoded[i] = 0x3d; //'='.charCodeAt(0)
+    }
+
+    return encoded;
+};
+
+exports.decode = function(encoded) {
+    var shiftIndex = 0;
+    var plainDigit = 0;
+    var plainChar;
+    var plainPos = 0;
+    if(!Buffer.isBuffer(encoded)){
+    	encoded = new Buffer(encoded);
+    }
+    var decoded = new Buffer(Math.ceil(encoded.length * 5 / 8));
+
+    /* byte by byte isn't as pretty as octet by octet but tests a bit
+        faster. will have to revisit. */
+    for(var i = 0; i < encoded.length; i++) {
+    	if(encoded[i] === 0x3d){ //'='
+    		break;
+    	}
+
+        var encodedByte = encoded[i] - 0x30;
+
+        if(encodedByte < byteTable.length) {
+            plainDigit = byteTable[encodedByte];
+
+            if(shiftIndex <= 3) {
+                shiftIndex = (shiftIndex + 5) % 8;
+
+                if(shiftIndex === 0) {
+                    plainChar |= plainDigit;
+                    decoded[plainPos] = plainChar;
+                    plainPos++;
+                    plainChar = 0;
+                } else {
+                    plainChar |= 0xff & (plainDigit << (8 - shiftIndex));
+                }
+            } else {
+                shiftIndex = (shiftIndex + 5) % 8;
+                plainChar |= 0xff & (plainDigit >>> shiftIndex);
+                decoded[plainPos] = plainChar;
+                plainPos++;
+
+                plainChar = 0xff & (plainDigit << (8 - shiftIndex));
+            }
+        } else {
+        	throw new Error('Invalid input - it is not base32 encoded string');
+        }
+    }
+
+    return decoded.slice(0, plainPos);
+};
+
+}).call(this)}).call(this,require("buffer").Buffer)
+},{"buffer":63}]},{},[187]);
