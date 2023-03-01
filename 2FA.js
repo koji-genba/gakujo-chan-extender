@@ -6,12 +6,12 @@ import { authenticator } from 'otplib';
 function totp(key){
     return authenticator.generate(key);
 }
-
+//2fa鍵保存部分
 function key_save(){
     var str = document.getElementById("key_setform").value;
     browser.storage.local.set({"key": str});
 }
-
+//起動
 setTimeout(main_call,1500);
 function main_call(){
     if (!document.getElementById("portaltimerimg")){

@@ -26330,15 +26330,17 @@ var _otplib = require("otplib");
 //browserify 2FA.js -o 2FA-bundle.js -t [ babelify --presets [@babel/preset-env] ]
 
 //2fa自動入力部分
-function totp_new(key) {
+function totp(key) {
   return _otplib.authenticator.generate(key);
 }
+//2fa鍵保存部分
 function key_save() {
   var str = document.getElementById("key_setform").value;
   browser.storage.local.set({
     "key": str
   });
 }
+//起動
 setTimeout(main_call, 1500);
 function main_call() {
   if (!document.getElementById("portaltimerimg")) {
@@ -26378,7 +26380,7 @@ function main() {
   //自動入力部分
   browser.storage.local.get("key").then(function (item) {
     if (item.key) {
-      document.getElementsByName("ninshoCode")[0].value = totp_new(item.key);
+      document.getElementsByName("ninshoCode")[0].value = totp(item.key);
     }
   });
 }
