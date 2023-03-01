@@ -4,7 +4,7 @@
 const DIGIT = 6;
 const TIME_STEP = 30;
 
-function totp(key, date){
+function totp(key){
     const counter = Math.floor(Date.now() / 1000 / TIME_STEP);
 
     return hotp(key, counter);
@@ -40,9 +40,6 @@ function base32_decode(str){
     str = str.replace("1", '');
     need = (Math.floor(str.length/8)+1) * 8 - str.length;
     str = str.padEnd(need+str.length, "A");
-    console.log(str.length)
-    console.log(need)
-    console.log(str)
 
     var nums = ""
     for(let i = 0 ; i < str.length; i++){
@@ -58,12 +55,38 @@ function base32_decode(str){
     return bit
 }
 
+function key_save(){
+    var str = document.getElementById("key_setform").value;
+    browser.storage.local.set({"key": str});
+}
 
 setTimeout(main,1500);
 function main() {
-    document.getElementsByName("ninshoCode");
-    const key = base32_decode("KEY");
-    console.log(totp(key));
-    document.getElementsByName("ninshoCode")[0].value=totp(key);
-}
+    //2fa鍵保存部分
+    document.getElementsByName("form")[0].appendChild(document.createElement("br"))
+    const p = document.createElement("p");
+    const text = document.createTextNode("拡張機能2FA鍵保存フォーム");
+    p.appendChild(text);
+    document.getElementsByName("form")[0].appendChild(p);
 
+    const key_setform = document.createElement("input");
+    key_setform.id = "key_setform";
+    key_setform.setAttribute("type", "text");
+    key_setform.setAttribute("size", "30");
+    document.getElementsByName("form")[0].appendChild(key_setform);
+    console.log("created");
+
+    const savebutton = document.createElement("button");
+    savebutton.id = "savebutton";
+    savebutton.textContent = "save";
+    savebutton.addEventListener('click',function(){
+        key_save();
+    });
+    document.getElementsByName("form")[0].appendChild(savebutton);
+
+    browser.storage.local.get("key").then(item => {
+        if(item.key){
+            document.getElementsByName("ninshoCode")[0].value=totp(item.key);
+        }
+    })
+}
