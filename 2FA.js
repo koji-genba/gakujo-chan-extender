@@ -3,7 +3,7 @@
 
 import { authenticator } from 'otplib';
 //2fa自動入力部分
-function totp_new(key){
+function totp(key){
     return authenticator.generate(key);
 }
 
@@ -55,7 +55,7 @@ function main() {
     //自動入力部分
     browser.storage.local.get("key").then(item => {
         if(item.key){
-            document.getElementsByName("ninshoCode")[0].value=totp_new(item.key);
+            document.getElementsByName("ninshoCode")[0].value=totp(item.key);
         }
     })
 }
