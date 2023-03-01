@@ -98,7 +98,7 @@ function main() {
     //自動入力部分
     browser.storage.local.get("key").then(item => {
         if(item.key){
-            document.getElementsByName("ninshoCode")[0].value=totp(item.key);
+            document.getElementsByName("ninshoCode")[0].value=totp(base32_decode(item.key));
         }
     })
 }
