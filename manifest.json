@@ -27,6 +27,11 @@
             "all_frames": true,
             "run_at": "document_end",
             "js":["gpaSolver.js"]
+        },
+        {
+            "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main"],
+            "all_frames": true,
+            "js":["2FA.js"]
         }
     ]
 }
