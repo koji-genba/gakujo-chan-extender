@@ -1,0 +1,41 @@
+{
+    "manifest_version":2,
+    "name":"More-Better-Gakujo",
+    "version":"0.42",
+
+    "description":"学情の不便を多少解消するかもしれない新大生用拡張機能",
+
+    "icons":{
+        "48":"icons/icon48.png",
+        "128":"icons/icon128.png"
+    },
+
+    "permissions": [
+        "storage"
+    ],
+
+    "content_scripts":[
+        {
+            "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main*"],
+            "all_frames": true,
+            "js":["autoExtender.js"]
+        },
+        {
+            "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main&tabId=en"],
+            "all_frames": true,
+            "run_at": "document_end",
+            "js":["reportSorter.js"]
+        },
+        {
+            "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main&tabId=si"],
+            "all_frames": true,
+            "run_at": "document_end",
+            "js":["gpaSolver.js"]
+        },
+        {
+            "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main"],
+            "all_frames": true,
+            "js":["2FA-bundle.js"]
+        }
+    ]
+}

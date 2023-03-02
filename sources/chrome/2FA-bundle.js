@@ -26323,68 +26323,6 @@ function config (name) {
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],187:[function(require,module,exports){
-"use strict";
-
-var _otplib = require("otplib");
-//=====
-//browserify 2FA.js -o 2FA-bundle.js -t [ babelify --presets [@babel/preset-env] ]
-
-//2fa自動入力部分
-function totp(key) {
-  return _otplib.authenticator.generate(key);
-}
-//2fa鍵保存部分
-function key_save() {
-  var str = document.getElementById("key_setform").value;
-  browser.storage.local.set({
-    "key": str
-  });
-}
-//起動
-setTimeout(main_call, 1500);
-function main_call() {
-  if (!document.getElementById("portaltimerimg")) {
-    main();
-  }
-}
-function main() {
-  //2fa鍵保存部分
-  document.getElementsByName("form")[0].appendChild(document.createElement("br"));
-  var p1 = document.createElement("p");
-  var text1 = document.createTextNode("以下は学情拡張機能によって追加された部分です");
-  p1.appendChild(text1);
-  document.getElementsByName("form")[0].appendChild(p1);
-  document.getElementsByName("form")[0].appendChild(document.createElement("br"));
-  var p2 = document.createElement("p");
-  var text2 = document.createTextNode("拡張機能2FA鍵保存フォーム");
-  p2.appendChild(text2);
-  document.getElementsByName("form")[0].appendChild(p2);
-  var key_setform = document.createElement("input");
-  key_setform.id = "key_setform";
-  key_setform.setAttribute("type", "text");
-  key_setform.setAttribute("size", "50");
-  document.getElementsByName("form")[0].appendChild(key_setform);
-  var savebutton = document.createElement("button");
-  savebutton.id = "savebutton";
-  savebutton.textContent = "save";
-  savebutton.addEventListener('click', function () {
-    key_save();
-  });
-  document.getElementsByName("form")[0].appendChild(savebutton);
-  var github_link = document.createElement("a");
-  github_link.href = "https://github.com/koji-genba/gakujo-chan-extender";
-  github_link.target = "_blank";
-  github_link.innerText = "二段階認証自動入力機能の使い方説明はこちら";
-
-  //自動入力部分
-  browser.storage.local.get("key").then(function (item) {
-    if (item.key) {
-      document.getElementsByName("ninshoCode")[0].value = totp(item.key);
-    }
-  });
-}
-
-},{"otplib":192}],188:[function(require,module,exports){
 (function (Buffer){(function (){
 /**
  * @otplib/core
@@ -26879,7 +26817,7 @@ exports.totpTimeUsed = totpTimeUsed;
 exports.totpToken = totpToken;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":63}],189:[function(require,module,exports){
+},{"buffer":63}],188:[function(require,module,exports){
 (function (Buffer){(function (){
 /**
  * @otplib/plugin-crypto
@@ -26909,7 +26847,7 @@ exports.createDigest = createDigest;
 exports.createRandomBytes = createRandomBytes;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":63,"crypto":71}],190:[function(require,module,exports){
+},{"buffer":63,"crypto":71}],189:[function(require,module,exports){
 (function (Buffer){(function (){
 /**
  * @otplib/plugin-thirty-two
@@ -26937,7 +26875,7 @@ exports.keyDecoder = keyDecoder;
 exports.keyEncoder = keyEncoder;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":63,"thirty-two":193}],191:[function(require,module,exports){
+},{"buffer":63,"thirty-two":192}],190:[function(require,module,exports){
 /**
  * @otplib/preset-default
  *
@@ -26970,7 +26908,7 @@ exports.authenticator = authenticator;
 exports.hotp = hotp;
 exports.totp = totp;
 
-},{"@otplib/core":188,"@otplib/plugin-crypto":189,"@otplib/plugin-thirty-two":190}],192:[function(require,module,exports){
+},{"@otplib/core":187,"@otplib/plugin-crypto":188,"@otplib/plugin-thirty-two":189}],191:[function(require,module,exports){
 /**
  * otplib
  *
@@ -26995,7 +26933,7 @@ Object.keys(presetDefault).forEach(function (k) {
 	});
 });
 
-},{"@otplib/preset-default":191}],193:[function(require,module,exports){
+},{"@otplib/preset-default":190}],192:[function(require,module,exports){
 /*                                                                              
 Copyright (c) 2011, Chris Umbel
 
@@ -27023,7 +26961,7 @@ var base32 = require('./thirty-two');
 exports.encode = base32.encode;
 exports.decode = base32.decode;
 
-},{"./thirty-two":194}],194:[function(require,module,exports){
+},{"./thirty-two":193}],193:[function(require,module,exports){
 (function (Buffer){(function (){
 /*
 Copyright (c) 2011, Chris Umbel
@@ -27155,4 +27093,67 @@ exports.decode = function(encoded) {
 };
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"buffer":63}]},{},[187]);
+},{"buffer":63}],194:[function(require,module,exports){
+"use strict";
+
+var _otplib = require("otplib");
+//=====
+//chromeify 2FA.js -o 2FA-bundle.js -t [ babelify --presets [@babel/preset-env] ]
+
+//2fa自動入力部分
+function totp(key) {
+  return _otplib.authenticator.generate(key);
+}
+//2fa鍵保存部分
+function key_save() {
+  var str = document.getElementById("key_setform").value;
+  chrome.storage.local.set({
+    "key": str
+  });
+}
+//起動
+setTimeout(main_call, 1500);
+function main_call() {
+  if (!document.getElementById("portaltimerimg")) {
+    main();
+  }
+}
+function main() {
+  //2fa鍵保存部分
+  document.getElementsByName("form")[0].appendChild(document.createElement("br"));
+  var p1 = document.createElement("p");
+  var text1 = document.createTextNode("以下は学情拡張機能によって追加された部分です");
+  p1.appendChild(text1);
+  document.getElementsByName("form")[0].appendChild(p1);
+  document.getElementsByName("form")[0].appendChild(document.createElement("br"));
+  var p2 = document.createElement("p");
+  var text2 = document.createTextNode("拡張機能2FA鍵保存フォーム");
+  p2.appendChild(text2);
+  document.getElementsByName("form")[0].appendChild(p2);
+  var key_setform = document.createElement("input");
+  key_setform.id = "key_setform";
+  key_setform.setAttribute("type", "text");
+  key_setform.setAttribute("size", "50");
+  document.getElementsByName("form")[0].appendChild(key_setform);
+  var savebutton = document.createElement("button");
+  savebutton.id = "savebutton";
+  savebutton.textContent = "save";
+  savebutton.addEventListener('click', function () {
+    key_save();
+  });
+  document.getElementsByName("form")[0].appendChild(savebutton);
+  var github_link = document.createElement("a");
+  github_link.href = "https://github.com/koji-genba/gakujo-chan-extender";
+  github_link.target = "_blank";
+  github_link.innerText = "二段階認証自動入力機能の使い方説明はこちら";
+
+  //自動入力部分
+  chrome.storage.local.get("key", function (item) {
+    if (item.key) {
+      document.getElementsByName("ninshoCode")[0].value = totp(item.key);
+      console.log(totp(item.key));
+    }
+  });
+}
+
+},{"otplib":191}]},{},[194]);

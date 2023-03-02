@@ -1,5 +1,5 @@
 //=====
-//browserify 2FA.js -o 2FA-bundle.js -t [ babelify --presets [@babel/preset-env] ]
+//chromeify 2FA.js -o 2FA-bundle.js -t [ babelify --presets [@babel/preset-env] ]
 
 import { authenticator } from 'otplib';
 //2fa自動入力部分
@@ -9,7 +9,7 @@ function totp(key){
 //2fa鍵保存部分
 function key_save(){
     var str = document.getElementById("key_setform").value;
-    browser.storage.local.set({"key": str});
+    chrome.storage.local.set({"key": str});
 }
 //起動
 setTimeout(main_call,1500);
@@ -55,6 +55,7 @@ function main() {
     browser.storage.local.get("key").then(item => {
         if(item.key){
             document.getElementsByName("ninshoCode")[0].value=totp(item.key);
+            console.log(totp(item.key));
         }
     })
 }
