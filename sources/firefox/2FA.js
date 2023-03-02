@@ -50,6 +50,7 @@ function main() {
     github_link.href = "https://github.com/koji-genba/gakujo-chan-extender";
     github_link.target = "_blank";
     github_link.innerText = "二段階認証自動入力機能の使い方説明はこちら";
+    document.getElementsByName("form")[0].appendChild(github_link);
 
     //自動入力部分
     browser.storage.local.get("key").then(item => {
