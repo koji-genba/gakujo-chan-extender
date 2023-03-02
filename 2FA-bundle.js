@@ -26362,9 +26362,8 @@ function main() {
   var key_setform = document.createElement("input");
   key_setform.id = "key_setform";
   key_setform.setAttribute("type", "text");
-  key_setform.setAttribute("size", "30");
+  key_setform.setAttribute("size", "50");
   document.getElementsByName("form")[0].appendChild(key_setform);
-  console.log("created");
   var savebutton = document.createElement("button");
   savebutton.id = "savebutton";
   savebutton.textContent = "save";

@@ -35,9 +35,8 @@ function main() {
     const key_setform = document.createElement("input");
     key_setform.id = "key_setform";
     key_setform.setAttribute("type", "text");
-    key_setform.setAttribute("size", "30");
+    key_setform.setAttribute("size", "50");
     document.getElementsByName("form")[0].appendChild(key_setform);
-    console.log("created");
 
     const savebutton = document.createElement("button");
     savebutton.id = "savebutton";
@@ -48,7 +47,7 @@ function main() {
     document.getElementsByName("form")[0].appendChild(savebutton);
 
     const github_link = document.createElement("a");
-    github_link.href = "https://github.com/koji-genba/gakujo-chan-extender"
+    github_link.href = "https://github.com/koji-genba/gakujo-chan-extender";
     github_link.target = "_blank";
     github_link.innerText = "二段階認証自動入力機能の使い方説明はこちら";
 
