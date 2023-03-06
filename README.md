@@ -76,7 +76,7 @@ https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdof
 既に学務情報システムで2段階認証をセットアップした人は1から始めてください．
 ## 1
 ![2FA画面1](https://github.com/koji-genba/gakujo-chan-extender/blob/Readme_images/2FA_2.png?raw=true)  
-学務情報システムで2段階認証をセットアップ済みの方ははリセットを行う必要があります．  
+学務情報システムで2段階認証をセットアップ済みの方はリセットを行う必要があります．  
 「リセット」をクリックしてリセット作業を始めます．
 
 ## 2
