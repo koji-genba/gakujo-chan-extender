@@ -73,11 +73,9 @@ function main() {
         });
 
         //ソート用ボタン追加
-        console.log("mainend");
         document.getElementById("tabmenutable").appendChild(nobutton);
         document.getElementById("tabmenutable").appendChild(opennumbutton);
         document.getElementById("tabmenutable").appendChild(scorebutton);
-        console.log("mainendddd");
 
     }
 }
@@ -113,7 +111,6 @@ function sort_by_No(){
             table.rows[i+1].cells[j].innerHTML = array1[i][j];
         }
     }
-    console.log(array1.length);
 }
 
 function sort_by_opennum(){
@@ -149,7 +146,6 @@ function sort_by_opennum(){
             table.rows[i+1].cells[j].innerHTML = array1[i][j];
         }
     }
-    console.log(array1.length);
 }
 
 function sort_by_score(){
@@ -168,7 +164,6 @@ function sort_by_score(){
         array1[i]=[] /*配列を二次元にする，行内データを入れるため*/
         for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
             array1[i][j] = table.rows[i].cells[j].innerHTML;
-            console.log(array1[i][9]);
         }
     }
 
@@ -183,5 +178,4 @@ function sort_by_score(){
             table.rows[i+1].cells[j].innerHTML = array1[i][j];
         }
     }
-    console.log(array1.length);
 }
