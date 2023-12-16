@@ -18,7 +18,6 @@ function main() {
 function PrintGPA(){
     //成績の表をページから取得
     table = LoadTable()
-    console.log(table)
     //GPA計算して表示
     gpa = CalcGPA(table)
 
@@ -42,21 +41,21 @@ function LoadTable(){
 
 function CalcGPA(table){
     //取得した成績の表を二次元配列にする
-    var array1 = [] //GP×単位数を格納
-    var array2 = [] //単位数を格納
+    var GP_Credits = [] //GP×単位数を格納
+    var Credits = [] //単位数を格納
 
     for(let i = 1; i < table.rows.length; i++){ //行のループ
         if(table.rows[i].cells[12].textContent.match(/[0-9]/)){ // GPの値が存在したら
-            array1[i] = Number(table.rows[i].cells[12].textContent) * Number(table.rows[i].cells[8].textContent); //GP×単位数
-            array2[i] = Number(table.rows[i].cells[8].textContent); //単位数
+            GP_Credits[i] = Number(table.rows[i].cells[12].textContent) * Number(table.rows[i].cells[8].textContent); //GP×単位数
+            Credits[i] = Number(table.rows[i].cells[8].textContent); //単位数
         }else{
-            array1[i] = null;
-            array2[i] = null;
+            GP_Credits[i] = null;
+            Credits[i] = null;
         }
     }
     //null要素はフィルタして消す(消えているかもしれない)
-    var gp = array1.filter(Boolean);
-    var tan = array2.filter(Boolean);
+    var gp = GP_Credits.filter(Boolean);
+    var tan = Credits.filter(Boolean);
 
     //合計GP計算
     gp_sum = gp.reduce(function(sum, element){
@@ -111,27 +110,26 @@ function SortByNumber(){
     //その他作用:成績表の表示順を画面の謎ナンバ順にする
 
     //mainと同様にやって表取得
-    elem = document.getElementById("main-frame-if");
-    table = elem.contentWindow.document.querySelector("#taniReferListForm+table");
-    var array1 = []
+    table = LoadTable()
+    var table_array = []
 
     //表を二次元配列に
     for(let i = 1; i < table.rows.length; i++){ /*行のループ*/
-        array1[i]=[] /*配列を二次元にする，行内データを入れるため*/
+        table_array[i]=[] /*配列を二次元にする，行内データを入れるため*/
         for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
-            array1[i][j] = table.rows[i].cells[j].innerHTML;
+            table_array[i][j] = table.rows[i].cells[j].innerHTML;
         }
     }
 
     //No.でソート
-    array1.sort((a,b)=>{
+    table_array.sort((a,b)=>{
         return Number(a[0]) - Number(b[0]); //sort関数は比較用の関数を渡さないとダメ
     });
 
     //ソートしたデータで表を書き換え
-    for(let i = 0; i < array1.length; i++){
+    for(let i = 0; i < table_array.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
-            table.rows[i+1].cells[j].innerHTML = array1[i][j];
+            table.rows[i+1].cells[j].innerHTML = table_array[i][j];
         }
     }
 
@@ -145,30 +143,29 @@ function SortByOpennum(){
     //その他作用:成績表の表示順を開講番号順にする
 
     //mainと同様にやって表取得
-    elem = document.getElementById("main-frame-if");
-    table = elem.contentWindow.document.querySelector("#taniReferListForm+table");
-    var array1 = []
+    table = LoadTable()
+    var table_array = []
 
     //表を二次元配列に
     for(let i = 1; i < table.rows.length; i++){ /*行のループ*/
-        array1[i]=[] /*配列を二次元にする，行内データを入れるため*/
+        table_array[i]=[] /*配列を二次元にする，行内データを入れるため*/
         for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
-            array1[i][j] = table.rows[i].cells[j].innerHTML;
+            table_array[i][j] = table.rows[i].cells[j].innerHTML;
         }
-        array1[i][table.rows[0].cells.length+1] = table.rows[i].cells[3].textContent
+        table_array[i][table.rows[0].cells.length+1] = table.rows[i].cells[3].textContent
     }
 
     //開講番号でソート
-    array1.sort((a,b)=>{
+    table_array.sort((a,b)=>{
         if(a[table.rows[0].cells.length+1] < b[table.rows[0].cells.length+1]) return -1;
         else if(a[table.rows[0].cells.length+1] > b[table.rows[0].cells.length+1]) return 1;
         return 0;
     });
 
     //ソートしたデータで表を書き換え
-    for(let i = 0; i < array1.length; i++){
+    for(let i = 0; i < table_array.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
-            table.rows[i+1].cells[j].innerHTML = array1[i][j];
+            table.rows[i+1].cells[j].innerHTML = table_array[i][j];
         }
     }
     PrintGPA()
@@ -181,27 +178,26 @@ function SortByScore(){
     //その他作用:成績表の表示順を得点順にする
 
     //mainと同様にやって表取得
-    elem = document.getElementById("main-frame-if");
-    table = elem.contentWindow.document.querySelector("#taniReferListForm+table");
-    var array1 = []
+    table = LoadTable()
+    var table_array = []
 
     //表を二次元配列に
     for(let i = 1; i < table.rows.length; i++){ /*行のループ*/
-        array1[i]=[] /*配列を二次元にする，行内データを入れるため*/
+        table_array[i]=[] /*配列を二次元にする，行内データを入れるため*/
         for(let j = 0; j < table.rows[0].cells.length; j++){ /*行内でのループ*/
-            array1[i][j] = table.rows[i].cells[j].innerHTML;
+            table_array[i][j] = table.rows[i].cells[j].innerHTML;
         }
     }
 
     //得点でソート
-    array1.sort((a,b)=>{
+    table_array.sort((a,b)=>{
         return Number(a[9]) - Number(b[9]);
     });
 
     //ソートしたデータでテーブルを書き換え
-    for(let i = 0; i < array1.length; i++){
+    for(let i = 0; i < table_array.length; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
-            table.rows[i+1].cells[j].innerHTML = array1[i][j];
+            table.rows[i+1].cells[j].innerHTML = table_array[i][j];
         }
     }
     PrintGPA()
