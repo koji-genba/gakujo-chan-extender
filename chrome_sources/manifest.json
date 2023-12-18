@@ -27,6 +27,12 @@
             "js":["reportSorter.js"]
         },
         {
+            "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main&tabId=kj"],
+            "all_frames": true,
+            "run_at": "document_end",
+            "js":["message_reader_bundle.js"]
+        },
+        {
             "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main&tabId=si"],
             "all_frames": true,
             "run_at": "document_end",
