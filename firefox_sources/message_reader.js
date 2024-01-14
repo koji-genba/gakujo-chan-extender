@@ -1,5 +1,3 @@
-//const browserify = require("browserify");
-
 window.addEventListener("load", main, false);
 
 function main() {
@@ -18,20 +16,18 @@ function main() {
 }
 
 function LoadTable(){
-    //成績の表をページから取得
-        //成績のテーブルはiframeの中らしいからまずiframeを取得
+    //通知の表をページから取得
+        //通知のテーブルはiframeの中らしいからまずiframeを取得
     var elem = document.getElementById("main-frame-if");
-    console.log(elem)
         //レポートのテーブルそのものにはidが無いから近くのidあるやつから1つ後ろってので表現してる
     var table = elem.contentWindow.document.querySelector("table.normal:nth-child(9)");
-    console.log(table)
 
     return table
 }
 
 
 function MakeButton(){
-    //ソート用ボタン生成1
+    //既読用ボタン生成
     var readbutton = document.createElement("button");
     readbutton.id = "readbutton";
     readbutton.textContent = "指定した個数を既読にする";
@@ -39,11 +35,12 @@ function MakeButton(){
         Reader_call();
     });
 
-    //ソート用ボタン追加
+    //既読用ボタン追加
     document.getElementById("tabmenutable").appendChild(readbutton);
 }
 
 function MakeInputBox(){
+    //既読個数設定用入力欄生成
     var inputbox = document.createElement("input");
     inputbox.id = "readNumInputBox"
     inputbox.type = "number";
@@ -51,6 +48,8 @@ function MakeInputBox(){
     inputbox.pattern = "\d*";
     inputbox.oninput = "value = value.replace(/[^0-9]+/i,'');";
     inputbox.placeholder = "既読にする数(半角数字)";
+
+    //既読個数設定用入力欄追加
     document.getElementById("tabmenutable").appendChild(inputbox);
 }
 
@@ -68,26 +67,28 @@ function Reader_call(){
         }
     }
 
+    //個数入力欄から数取得
     var InputBox = document.getElementById("readNumInputBox")
     var ReadNum = InputBox.value
-    console.log(ReadNum)
 
+    //指定数分だけループ
     for (let i = 1; i <= InputBox.value; i++) {
+        //リンクのとこのinnerHTML取得
         var url = table_array[i][1]
+        //url切り出し&加工でリンク生成
         url = url.substr(url.indexOf("=")+2)
         url = url.substr(0, url.indexOf('">'))
         while(url.indexOf('amp;')!=-1){
             url = url.replace('amp;', '');
         }
-        console.log(url)
         url = "https://gakujo.iess.niigata-u.ac.jp/campusweb/" + url
 
-        console.log(table_array[1][1])
-        console.log(url)
-
-
+        //生成したリンクで別タブ生成させる
+        //タブ生成は権限の都合でbackground.jsでやる
         browser.runtime.sendMessage({url: url});
     }
+
+    //1秒後にページリロード
     setTimeout(function() {
         window.location.reload();
       }, 1000);
