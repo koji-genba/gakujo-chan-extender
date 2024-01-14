@@ -7,7 +7,6 @@ function main() {
         if (document.getElementById("main-frame-if").contentWindow.document.querySelector("table.normal:nth-child(9)") != null) {
             clearInterval(Timer);
         }
-
     }
     //既読用ボタン作成
     MakeButton()
