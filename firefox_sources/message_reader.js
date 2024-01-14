@@ -88,5 +88,7 @@ function Reader_call(){
 
         browser.runtime.sendMessage({url: url});
     }
-    
+    setTimeout(function() {
+        window.location.reload();
+      }, 1000);
 }
