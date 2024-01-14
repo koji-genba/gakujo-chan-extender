@@ -1,4 +1,4 @@
-//const browserify = require("browserify");
+//const chromeify = require("chromeify");
 
 window.addEventListener("load", main, false);
 
@@ -13,6 +13,8 @@ function main() {
     }
     //既読用ボタン作成
     MakeButton()
+    //個数入力枠作成
+    MakeInputBox()
 }
 
 function LoadTable(){
@@ -32,13 +34,24 @@ function MakeButton(){
     //ソート用ボタン生成1
     var readbutton = document.createElement("button");
     readbutton.id = "readbutton";
-    readbutton.textContent = "上から5個を既読にする";
+    readbutton.textContent = "指定した個数を既読にする";
     readbutton.addEventListener('click',function(){
         Reader_call();
     });
 
     //ソート用ボタン追加
     document.getElementById("tabmenutable").appendChild(readbutton);
+}
+
+function MakeInputBox(){
+    var inputbox = document.createElement("input");
+    inputbox.id = "readNumInputBox"
+    inputbox.type = "number";
+    inputbox.defaultValue = "5";
+    inputbox.pattern = "\d*";
+    inputbox.oninput = "value = value.replace(/[^0-9]+/i,'');";
+    inputbox.placeholder = "既読にする数(半角数字)";
+    document.getElementById("tabmenutable").appendChild(inputbox);
 }
 
 function Reader_call(){
@@ -55,7 +68,11 @@ function Reader_call(){
         }
     }
 
-    for (let i = 1; i <= 5; i++) {
+    var InputBox = document.getElementById("readNumInputBox")
+    var ReadNum = InputBox.value
+    console.log(ReadNum)
+
+    for (let i = 1; i <= InputBox.value; i++) {
         var url = table_array[i][1]
         url = url.substr(url.indexOf("=")+2)
         url = url.substr(0, url.indexOf('">'))
@@ -71,30 +88,7 @@ function Reader_call(){
 
         chrome.runtime.sendMessage({url: url});
     }
+    setTimeout(function() {
+        window.location.reload();
+      }, 1000);
 }
-
-//function sleep(waitSec, callbackFunc) {
-//
-//    var spanedSec = 0;
-//
-//    var waitFunc = function () {
-//
-//        spanedSec++;
-//
-//        if (spanedSec >= waitSec) {
-//            if (callbackFunc) callbackFunc();
-//            return;
-//        }
-//
-//        clearTimeout(id);
-//        id = setTimeout(waitFunc, 1000);
-//
-//    };
-//
-//    var id = setTimeout(waitFunc, 1000);
-//
-//  }
-//
-//  sleep(5, function() {
-//    console.log('5秒経過しました！');
-//  });
