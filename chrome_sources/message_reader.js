@@ -1,3 +1,5 @@
+//const browserify = require("browserify");
+
 window.addEventListener("load", main, false);
 
 function main() {
@@ -30,22 +32,18 @@ function MakeButton(){
     //ソート用ボタン生成1
     var readbutton = document.createElement("button");
     readbutton.id = "readbutton";
-    readbutton.textContent = "No.でソート";
+    readbutton.textContent = "上から5個を既読にする";
     readbutton.addEventListener('click',function(){
-        Reader();
+        Reader_call();
     });
 
     //ソート用ボタン追加
     document.getElementById("tabmenutable").appendChild(readbutton);
 }
 
-function Reader(){
-    //引数:なし
-    //返す:なし
-    //依存:なし
-    //その他作用:成績表の表示順を画面の謎ナンバ順にする
+function Reader_call(){
 
-    //mainと同様にやって表取得
+    //表取得
     var table = LoadTable()
     var table_array = []
 
@@ -57,49 +55,46 @@ function Reader(){
         }
     }
 
-    var url = table_array[1][1]
-    url = url.substr(url.indexOf("=")+2)
-    url = url.substr(0, url.indexOf('">')-1)
-    console.log(url)
-    url = "https://gakujo.iess.niigata-u.ac.jp/campusweb/" + url
+    for (let i = 1; i <= 5; i++) {
+        var url = table_array[i][1]
+        url = url.substr(url.indexOf("=")+2)
+        url = url.substr(0, url.indexOf('">'))
+        while(url.indexOf('amp;')!=-1){
+            url = url.replace('amp;', '');
+        }
+        console.log(url)
+        url = "https://gakujo.iess.niigata-u.ac.jp/campusweb/" + url
 
-    console.log(table_array[1][1])
-    console.log(url)
-
-
-    const req = new Request(url,{
-        headers: {
-            "Host": "gakujo.iess.niigata-u.ac.jp",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Connection": "keep-alive",
-
-            "referrer": url.substr(0, url.indexOf('&a')-1),
-            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-
-            "user-agent": navigator.userAgent,
-            "Accept-Language": "ja-JP,ja;q=0.9,en-US;q=0.8,en;q=0.7",
-            "Upgrade-Insecure-Requests": "1",
+        console.log(table_array[1][1])
+        console.log(url)
 
 
-            "Sec-Fetch-Dest": "iframe",
-            "Sec-Fetch-Mode": "navigate",
-            "Sec-Fetch-Site": "same-origin",
-            "Sec-Fetch-User": "?1"
-        },
-        method: "GET",
-        mode: "cors",
-        redirect: 'follow',
-        credentials: "same-origin",
-        referrerPolicy: "origin-when-cross-origin",
-    })
-    console.log(req)
-    fetch(req).then(console.log);
-
-    //const Http = new XMLHttpRequest();
-    //Http.open("GET", url);
-    //Http.send();
-    //Http.onreadystatechange=(e)=>{
-    //    console.log(Http.responseText)
-    //}
-
+        chrome.runtime.sendMessage({url: url});
+    }
 }
+
+//function sleep(waitSec, callbackFunc) {
+//
+//    var spanedSec = 0;
+//
+//    var waitFunc = function () {
+//
+//        spanedSec++;
+//
+//        if (spanedSec >= waitSec) {
+//            if (callbackFunc) callbackFunc();
+//            return;
+//        }
+//
+//        clearTimeout(id);
+//        id = setTimeout(waitFunc, 1000);
+//
+//    };
+//
+//    var id = setTimeout(waitFunc, 1000);
+//
+//  }
+//
+//  sleep(5, function() {
+//    console.log('5秒経過しました！');
+//  });
