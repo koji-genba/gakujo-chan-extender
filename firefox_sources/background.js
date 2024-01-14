@@ -4,7 +4,7 @@ browser.runtime.onMessage.addListener(function(message, sender, callback) {
             'url': message.url ,
             'active': false ,
             },function(tab){
-                setTimeout(function(){chrome.tabs.remove(tab.id);}, 1000);
+                setTimeout(function(){browser.tabs.remove(tab.id);}, 1000);
             });
     }
 })
