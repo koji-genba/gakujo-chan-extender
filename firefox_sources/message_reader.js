@@ -54,11 +54,13 @@ function Reader_call(){
             table_array[i][j] = table.rows[i].cells[j].innerHTML;
         }
     }
-
+    
     var url = table_array[1][1]
     url = url.substr(url.indexOf("=")+2)
     url = url.substr(0, url.indexOf('">'))
-    url = url.replace('amp;', '');
+    while(url.indexOf('amp;')!=-1){
+        url = url.replace('amp;', '');
+    }
     console.log(url)
     url = "https://gakujo.iess.niigata-u.ac.jp/campusweb/" + url
 
