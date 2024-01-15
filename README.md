@@ -4,6 +4,13 @@
 外部に情報を送信したりするようなことは全くないしそんなプログラムを作れるようなスキルは私にはないため安心安全です．
 「More-Better」は文法的におかしい?…うるせぇ！！！気にすんな！！！！！忘れて！！！！！！！！！~~深夜テンションで命名したのでな~~
 
+# インストール
+Firefoxはこちらからどうぞ  
+https://addons.mozilla.org/ja/firefox/addon/more-better-gakujo/  
+
+ChromeとEdgeはこちらから  
+https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdofhpnnnecadmmod
+
 # 機能
 
 ## 2段階認証自動入力
@@ -54,13 +61,6 @@
 
 # 環境
 とりあえず最新版のFirefoxで開発しています．Chromeも動作確認を行っています．Edgeもたぶん大丈夫．
-
-# インストール
-Firefoxはこちらからどうぞ  
-https://addons.mozilla.org/ja/firefox/addon/more-better-gakujo/  
-
-ChromeとEdgeはこちらから  
-https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdofhpnnnecadmmod
 
 # 使い方
 
