@@ -11,6 +11,10 @@ https://addons.mozilla.org/ja/firefox/addon/more-better-gakujo/
 ChromeとEdgeはこちらから  
 https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdofhpnnnecadmmod
 
+# 環境
+とりあえず最新版のFirefoxで開発しています．Chromeも動作確認を行っています．Edgeもたぶん大丈夫．  
+聞いた話によるとBraveでも動くらしい．
+
 # 機能
 
 ## 2段階認証自動入力
@@ -57,10 +61,6 @@ https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdof
 使い方はまあ見てのとおりです．枠に半角数字で既読にしたい個数入力してボタン押すと，その分だけ上から別タブで読み込んで，開いたタブは1秒で自動で閉じて，更にボタン押して1秒後に自動で連絡通知のページをリロードする感じです．  
   
 ちなみに存在する連絡通知よりも多い数を指定した時の動作は確認してません。多分動かないと思うけどどうなっても知らん。  
-
-
-# 環境
-とりあえず最新版のFirefoxで開発しています．Chromeも動作確認を行っています．Edgeもたぶん大丈夫．
 
 # 使い方
 
