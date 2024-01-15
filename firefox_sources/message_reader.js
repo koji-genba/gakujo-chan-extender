@@ -70,8 +70,13 @@ function Reader_call(){
     var InputBox = document.getElementById("readNumInputBox")
     var ReadNum = InputBox.value
 
+    //数じゃないのが入力されていた時の処理
+    if(isNaN(ReadNum)){
+        ReadNum = 0
+    }
+
     //指定数分だけループ
-    for (let i = 1; i <= InputBox.value; i++) {
+    for (let i = 1; i <= ReadNum; i++) {
         //リンクのとこのinnerHTML取得
         var url = table_array[i][1]
         //url切り出し&加工でリンク生成
