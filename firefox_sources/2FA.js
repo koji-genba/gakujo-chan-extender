@@ -74,7 +74,7 @@ function main() {
     document.getElementsByName("form")[0].appendChild(github_link);
 
     //自動入力するやつ
-    chrome.storage.local.get("key", item => { //ストレージから鍵取得
+    browser.storage.local.get("key", item => { //ストレージから鍵取得
         if(item.key){ //ちゃんと鍵取得できたら
             document.getElementsByName("ninshoCode")[0].value=totp(item.key); //totp関数に秘密鍵渡して二段階認証の6桁コード生成して枠に入力
             console.log(totp(item.key)); //生成した6桁コードをコンソールに吐いておく(不具合確認のため)

@@ -4,6 +4,17 @@
 外部に情報を送信したりするようなことは全くないしそんなプログラムを作れるようなスキルは私にはないため安心安全です．
 「More-Better」は文法的におかしい?…うるせぇ！！！気にすんな！！！！！忘れて！！！！！！！！！~~深夜テンションで命名したのでな~~
 
+# インストール
+Firefoxはこちらからどうぞ  
+https://addons.mozilla.org/ja/firefox/addon/more-better-gakujo/  
+
+ChromeとEdgeはこちらから  
+https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdofhpnnnecadmmod
+
+# 環境
+とりあえず最新版のFirefoxで開発しています．Chromeも動作確認を行っています．Edgeもたぶん大丈夫．  
+聞いた話によるとBraveでも動くらしい．
+
 # 機能
 
 ## 2段階認証自動入力
@@ -44,17 +55,12 @@
 ![成績画面のボタン](https://github.com/koji-genba/gakujo-chan-extender/blob/Readme_images/score_firefox.png?raw=true)  
 レポートのソートと同じ感じです．
 
-# 環境
-とりあえず最新版のFirefoxで開発しています．Chromeも動作確認を行っています．Edgeもたぶん大丈夫．
-
-# インストール
-Firefoxはこちらからどうぞ  
+## 連絡通知一括既読
+![連絡通知一括既読](https://raw.githubusercontent.com/koji-genba/gakujo-chan-extender/Readme_images/messageReader_1.png)  
+気づくとありえない量溜まってて読むのが億劫になることに定評がある連絡通知を一気に既読にします．  
+使い方はまあ見てのとおりです．枠に半角数字で既読にしたい個数入力してボタン押すと，その分だけ上から別タブで読み込んで，開いたタブは1秒で自動で閉じて，更にボタン押して1秒後に自動で連絡通知のページをリロードする感じです．  
   
-https://addons.mozilla.org/ja/firefox/addon/more-better-gakujo/  
-  
-ChromeとEdgeはこちらから  
-  
-https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdofhpnnnecadmmod
+ちなみに存在する連絡通知よりも多い数を指定した時の動作は確認してません。多分動かないと思うけどどうなっても知らん。  
 
 # 使い方
 
@@ -70,6 +76,9 @@ https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdof
 何もしなくても成績のページを開けば表のGPの行の一番上にGPAが表示されます．
 ### ソート
 ボタンを押して．
+
+## 連絡通知一括既読  
+さっき書いた通り
 
 # 2段階認証セットアップ方法
 まだ学務情報システムで2段階認証をセットアップしてない場合は6から始めてください．  
