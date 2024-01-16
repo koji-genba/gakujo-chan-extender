@@ -11,6 +11,10 @@ https://addons.mozilla.org/ja/firefox/addon/more-better-gakujo/
 ChromeとEdgeはこちらから  
 https://chrome.google.com/webstore/detail/more-better-gakujo/gagpkjpimdfhiccjdofhpnnnecadmmod
 
+権限がどうとか出るかと思われますが，この拡張機能がは学情で画面に表示されている以上の内容は一切取得しない（できない）し，取得した内容も保存しないし，外部への送信なんて全くしません．ここに書いてある以外の機能はありません．  
+ただ二段階認証の自動化をセットアップしたならば，そのためのデータだけは保存します．んでもどっかにそれを送信したりはありません．  
+もし疑うならソースコード読んでください．「下手糞で醜い杜撰なコード」などという意見は得られるかもしれませんが，怪しいプログラムではないと分かってもらえると思います．
+
 # 環境
 とりあえず最新版のFirefoxで開発しています．Chromeも動作確認を行っています．Edgeもたぶん大丈夫．  
 聞いた話によるとBraveでも動くらしい．
