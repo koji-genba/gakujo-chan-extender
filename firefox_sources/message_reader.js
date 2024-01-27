@@ -10,18 +10,27 @@ function main() {
                 //既読用ボタン作成
                 makeButton();
                 //個数入力枠作成
-                makeinputBox();
+                makeInputBox();
         }
     }
 }
 
 function loadTable(){
+    //引数:なし
+    //返す:連絡通知の表
+    //依存:なし
+    //作用:なし
 
     return document.getElementById("main-frame-if").contentWindow.document.querySelector("table.normal:nth-child(9)");
 }
 
 
 function makeButton(){
+    //引数:なし
+    //返す:なし
+    //依存:readerCall
+    //作用:既読にするボタン作る
+    
     //既読用ボタン生成
     var readButton = document.createElement("button");
     readButton.id = "readButton";
@@ -34,7 +43,12 @@ function makeButton(){
     document.getElementById("tabmenutable").appendChild(readButton);
 }
 
-function makeinputBox(){
+function makeInputBox(){
+    //引数:なし
+    //返す:なし
+    //依存:なし
+    //作用:既読にする数指定する入力枠作る
+    
     //既読個数設定用入力欄生成
     var inputBox = document.createElement("input");
     inputBox.id = "readNumInputBox"
@@ -49,6 +63,10 @@ function makeinputBox(){
 }
 
 function readerCall(){
+    //引数:なし
+    //返す:なし
+    //依存:loadTable, backGround.js
+    //作用:background.jsに既読にする通知のurl渡して1秒後にページリロード
 
     //表取得
     var table = loadTable()
