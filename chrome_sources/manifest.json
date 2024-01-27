@@ -25,7 +25,7 @@
         {
             "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main*"],
             "all_frames": true,
-            "js":["autoExtender.js"]
+            "js":["autoExtender.js", "verShow.js"]
         },
         {
             "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main&tabId=en"],
