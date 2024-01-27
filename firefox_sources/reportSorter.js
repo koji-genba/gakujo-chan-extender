@@ -203,7 +203,7 @@ function sort_by_number(){
 
 
     //ソートしたデータでテーブルを書き換え
-    for(let i = 0; i < ReportArray.length; i++){
+    for(let i = 0; i < ReportArray.length-1; i++){
         for(let j = 0; j < table.rows[0].cells.length-1; j++){
             table.rows[i+1].cells[j].innerHTML = ReportArray[i][j];
         }
@@ -232,7 +232,7 @@ function sort_by_title(){
 
 
     //ソートしたデータでテーブルを書き換え
-    for(let i = 0; i < ReportArray.length; i++){
+    for(let i = 0; i < ReportArray.length-1; i++){
         for(let j = 0; j < table.rows[0].cells.length-1; j++){
             table.rows[i+1].cells[j].innerHTML = ReportArray[i][j];
         }
