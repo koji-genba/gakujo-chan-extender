@@ -16,6 +16,11 @@ function main() {
 }
 
 function printGpa(){
+    //引数:なし
+    //返す:なし
+    //依存:loadTable, calcGpa
+    //作用:GPA表示
+    
     //成績の表をページから取得
     table = loadTable()
     //GPA計算
@@ -25,11 +30,20 @@ function printGpa(){
 }
 
 function loadTable(){
+    //引数:なし
+    //返す:成績の表
+    //依存:なし
+    //作用:なし
 
     return document.getElementById("main-frame-if").contentWindow.document.querySelector("#taniReferListForm+table");
 }
 
 function calcGpa(table){
+    //引数:成績の表
+    //返す:gpa
+    //依存:なし
+    //作用:なし
+    
     //取得した成績の表を二次元配列にする
     var gpCredits = [] //GP×単位数を格納
     var credits = [] //単位数を格納
@@ -63,6 +77,11 @@ function calcGpa(table){
 }
 
 function makeButton(){
+    //引数:なし
+    //返す:なし
+    //依存:sortByNumber, sortByOpenNum, sortByScore
+    //作用:ソートするボタン表示
+    
     //ソート用ボタン生成1
     noButton = document.createElement("button");
     noButton.id = "noButton";
@@ -96,10 +115,10 @@ function makeButton(){
 function sortByNumber(){
     //引数:なし
     //返す:なし
-    //依存:なし
+    //依存:loadTable, printGpa
     //その他作用:成績表の表示順を画面の謎ナンバ順にする
 
-    //mainと同様にやって表取得
+    //表取得
     table = loadTable()
     var tableArray = []
 
@@ -129,10 +148,10 @@ function sortByNumber(){
 function sortByOpennum(){
     //引数:なし
     //返す:なし
-    //依存:なし
+    //依存:loadTable, printGpa
     //その他作用:成績表の表示順を開講番号順にする
 
-    //mainと同様にやって表取得
+    //表取得
     table = loadTable()
     var tableArray = []
 
@@ -164,10 +183,10 @@ function sortByOpennum(){
 function sortByScore(){
     //引数:なし
     //返す:なし
-    //依存:なし
+    //依存:loadTable, printGpa
     //その他作用:成績表の表示順を得点順にする
 
-    //mainと同様にやって表取得
+    //表取得
     table = loadTable()
     var tableArray = []
 
