@@ -7,7 +7,6 @@ function main(){
         if (document.getElementById("main-frame-if").contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)") != null) {
             clearInterval(Timer);
 
-            setTempColorBlue();
             MakeButton();
             sortByDate(LoadReportTable());
         }
@@ -114,7 +113,10 @@ function sortByDate(){
     //返す:なし
     //依存:makeReportArray(表->配列のため)
     //その他作用:レポート等々の表を提出期限でソートする(未提出->一次提出->提出済)
-
+    
+    //一時保存青に
+    setTempColorBlue()
+    
     //テーブルを二次元配列にする
     table = LoadReportTable()
     ReportArray = makeReportArray(table);
@@ -184,7 +186,10 @@ function sortByNumber(){
     //返す:なし
     //依存:makeReportArray(表->配列のため)
     //その他作用:レポート等々の表を開講番号でソートする
-
+    
+    //一時保存青に
+    setTempColorBlue()
+    
     //テーブルを二次元配列にする
     table = LoadReportTable()
     ReportArray = makeReportArray(table);
@@ -202,7 +207,7 @@ function sortByNumber(){
 
     //ソートしたデータでテーブルを書き換え
     for(let i = 0; i < ReportArray.length-1; i++){
-        for(let j = 0; j < table.rows[0].cells.length-1; j++){
+        for(let j = 0; j < table.rows[0].cells.length; j++){
             table.rows[i+1].cells[j].innerHTML = ReportArray[i][j];
         }
     }
@@ -214,6 +219,9 @@ function sortByTitle(){
     //依存:makeReportArray(表->配列のため)
     //その他作用:レポート等々の表をタイトルでソートする
 
+    //一時保存青に
+    setTempColorBlue()
+    
     //テーブルを二次元配列にする
     table = LoadReportTable()
     ReportArray = makeReportArray(table);
