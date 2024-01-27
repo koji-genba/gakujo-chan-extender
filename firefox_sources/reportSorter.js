@@ -4,9 +4,7 @@ function main(){
     /*レポートの表が表示されてから処理を開始するためのやつ*/
     const Timer = setInterval(Loaded, 1000); //1秒まってから起動
     function Loaded() {
-        console.log("func Loaded");
         if (document.getElementById("main-frame-if").contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)") != null) {
-            console.log("in if");
             clearInterval(Timer);
             setTempSaveButtonColorBlue();
             MakeButton();
