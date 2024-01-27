@@ -5,9 +5,17 @@ import { authenticator } from 'otplib';
 
 setTimeout(loadCheck,1500); //1.5秒してから起動する
 
-function loadCheck(){
-    if (!document.getElementById("portaltimerimg")){ //入力枠が存在していたらmain関数起動
-        main();
+
+function loadCheck() {
+    //入力枠が表示されてから動くためのやつ
+    const Timer = setInterval(loadCheck, 100); //100msごとに起動
+    function loadCheck() {
+        if (document.getElementById("google-authenticator-login-body") != null) {
+            clearInterval(Timer);
+            if (!document.getElementById("portaltimerimg")){ //入力枠が存在していたらmain関数起動
+                        main();
+            }
+        }
     }
 }
 
