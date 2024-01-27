@@ -7,6 +7,7 @@ function main(){
         if (document.getElementById("main-frame-if").contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)") != null) {
             clearInterval(Timer);
 
+            setTempColorBlue();
             MakeButton();
             sortByDate(LoadReportTable());
         }
@@ -239,7 +240,7 @@ function sortByTitle(){
 
     //ソートしたデータでテーブルを書き換え
     for(let i = 0; i < ReportArray.length-1; i++){
-        for(let j = 0; j < table.rows[0].cells.length-1; j++){
+        for(let j = 0; j < table.rows[0].cells.length; j++){
             table.rows[i+1].cells[j].innerHTML = ReportArray[i][j];
         }
     }
