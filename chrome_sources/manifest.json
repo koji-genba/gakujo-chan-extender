@@ -1,5 +1,5 @@
 {
-    "manifest_version":3,
+    "manifest_version":2,
     "name":"More-Better-Gakujo",
     "version":"0.60",
 
@@ -16,8 +16,10 @@
     ],
 
     "background" : {
-        "service_worker" : "background.js"
+        "scripts" : [ "backGround.js" ],
+        "persistent": true
     },
+
 
     "content_scripts":[
         {
@@ -35,7 +37,7 @@
             "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main&tabId=kj"],
             "all_frames": true,
             "run_at": "document_end",
-            "js":["message_reader.js"]
+            "js":["messageReader.js"]
         },
         {
             "matches":["https://gakujo.iess.niigata-u.ac.jp/campusweb/campusportal.do?page=main&tabId=si"],
