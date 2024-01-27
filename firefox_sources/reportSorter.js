@@ -63,12 +63,8 @@ function loadReportTable(){
     //返す:レポート等々の表
     //依存:なし
     //その他作用:なし
-    var table;
-    //レポートの表が表示されてから処理を開始するためのやつ
-    elem = document.getElementById("main-frame-if");
-    table = elem.contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)");
 
-    return table;
+    return document.getElementById("main-frame-if").contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)");
 }
 
 function makeReportArray(table){
@@ -112,7 +108,7 @@ function makeReportArray(table){
 function sortByDate(){
     //引数:なし
     //返す:なし
-    //依存:makeReportArray(表->配列のため)
+    //依存:makeReportArray(表->配列のため), setTempColorBlue()
     //その他作用:レポート等々の表を提出期限でソートする(未提出->一次提出->提出済)
     
     //一時保存青に
@@ -185,7 +181,7 @@ function sortByDate(){
 function sortByNumber(){
     //引数:なし
     //返す:なし
-    //依存:makeReportArray(表->配列のため)
+    //依存:makeReportArray(表->配列のため), setTempColorBlue()
     //その他作用:レポート等々の表を開講番号でソートする
     
     //一時保存青に
@@ -217,7 +213,7 @@ function sortByNumber(){
 function sortByTitle(){
     //引数:なし
     //返す:なし
-    //依存:makeReportArray(表->配列のため)
+    //依存:makeReportArray(表->配列のため), setTempColorBlue()
     //その他作用:レポート等々の表をタイトルでソートする
 
     //一時保存青に
