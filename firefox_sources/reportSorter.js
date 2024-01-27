@@ -1,18 +1,18 @@
-window.addEventListener("load", second, false);
-
+window.addEventListener("load", main, false);
 
 function main(){
     /*レポートの表が表示されてから処理を開始するためのやつ*/
     const Timer = setInterval(Loaded, 1000); //1秒まってから起動
     function Loaded() {
-        if (document.getElementById("main-frame-if").contentWindow.document.querySelector("#taniReferListForm+table") != null) {
+        console.log("func Loaded");
+        if (document.getElementById("main-frame-if").contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)") != null) {
+            console.log("in if");
             clearInterval(Timer);
+            setTempSaveButtonColorBlue();
+            MakeButton();
+            sort_by_date(LoadReportTable());
         }
     }
-
-    setTempSaveButtonColorBlue()
-    MakeButton()
-    sort_by_date(LoadReportTable())
 
 }
 
@@ -47,7 +47,7 @@ function MakeButton(){
     document.getElementById("tabmenutable").appendChild(datebutton);
 }
 
-function SetTempSaveButtonColorBlue(){
+function setTempSaveButtonColorBlue(){
     table = LoadReportTable()
     //一時保存の文字を青色に変える
     for(let i = 0; i < table.rows.length; i++){
@@ -204,7 +204,7 @@ function sort_by_number(){
 
     //ソートしたデータでテーブルを書き換え
     for(let i = 0; i < ReportArray.length; i++){
-        for(let j = 0; j < table.rows[0].cells.length; j++){
+        for(let j = 0; j < table.rows[0].cells.length-1; j++){
             table.rows[i+1].cells[j].innerHTML = ReportArray[i][j];
         }
     }
@@ -233,7 +233,7 @@ function sort_by_title(){
 
     //ソートしたデータでテーブルを書き換え
     for(let i = 0; i < ReportArray.length; i++){
-        for(let j = 0; j < table.rows[0].cells.length; j++){
+        for(let j = 0; j < table.rows[0].cells.length-1; j++){
             table.rows[i+1].cells[j].innerHTML = ReportArray[i][j];
         }
     }
