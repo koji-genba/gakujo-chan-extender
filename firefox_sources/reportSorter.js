@@ -6,12 +6,12 @@ function main(){
     function Loaded() {
         if (document.getElementById("main-frame-if").contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)") != null) {
             clearInterval(Timer);
-            setTempSaveButtonColorBlue();
+
+            setTempColorBlue();
             MakeButton();
-            sort_by_date(LoadReportTable());
+            sortByDate(LoadReportTable());
         }
     }
-
 }
 
 function MakeButton(){
@@ -20,7 +20,7 @@ function MakeButton(){
     titlebutton.id = "titlebutton";
     titlebutton.textContent = "タイトルでソート";
     titlebutton.addEventListener('click',function(){
-        sort_by_title(table);
+        sortByTitle(table);
     });
 
     //ソート用ボタン生成2
@@ -28,7 +28,7 @@ function MakeButton(){
     datebutton.id = "datebutton";
     datebutton.textContent = "提出期間でソート";
     datebutton.addEventListener('click',function(){
-        sort_by_date(table);
+        sortByDate(table);
     });
 
     //ソート用ボタン生成3
@@ -36,7 +36,7 @@ function MakeButton(){
     numberbutton.id = "numberbutton";
     numberbutton.textContent = "開講番号でソート";
     numberbutton.addEventListener('click',function(){
-        sort_by_number(table);
+        sortByNumber(table);
     });
 
     //ソート用ボタン配置
@@ -45,7 +45,7 @@ function MakeButton(){
     document.getElementById("tabmenutable").appendChild(datebutton);
 }
 
-function setTempSaveButtonColorBlue(){
+function setTempColorBlue(){
     table = LoadReportTable()
     //一時保存の文字を青色に変える
     for(let i = 0; i < table.rows.length; i++){
@@ -74,11 +74,11 @@ function LoadReportTable(){
 function makeReportArray(table){
     //引数:レポート等々の表
     //返す:↑を成形しデータ付加た二次元配列
-    //依存:getdate(日付時刻取得), (load(レポート等々表取得))
+    //依存:getDate(日付時刻取得), (load(レポート等々表取得))
     //その他作用:なし
 
     //今の日付時刻取得
-    now = getdate();
+    now = getDate();
 
     ReportArray = []; //データ入れる配列，後で二次元にする
 
@@ -109,7 +109,7 @@ function makeReportArray(table){
     return ReportArray;
 }
 
-function sort_by_date(){
+function sortByDate(){
     //引数:なし
     //返す:なし
     //依存:makeReportArray(表->配列のため)
@@ -179,7 +179,7 @@ function sort_by_date(){
     }
 }
 
-function sort_by_number(){
+function sortByNumber(){
     //引数:なし
     //返す:なし
     //依存:makeReportArray(表->配列のため)
@@ -208,7 +208,7 @@ function sort_by_number(){
     }
 }
 
-function sort_by_title(){
+function sortByTitle(){
     //引数:なし
     //返す:なし
     //依存:makeReportArray(表->配列のため)
@@ -237,7 +237,7 @@ function sort_by_title(){
     }
 }
 
-function getdate(){
+function getDate(){
     //引数:なし
     //返す:日付時刻連結の文字列 ex:2023/6/7/22:18 -> 202306072218
     //依存:なし
