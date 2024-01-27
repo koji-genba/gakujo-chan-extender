@@ -2,15 +2,15 @@ window.addEventListener("load", main, false);
 
 function main() {
     //通知一覧が表示されてから処理を開始するためのやつ
-    const Timer = setInterval(Loaded, 1000); //1秒ごとに起動
-    function Loaded() {
+    const Timer = setInterval(loadCheck, 100); //100msごとに起動
+    function loadCheck() {
         if (document.getElementById("main-frame-if").contentWindow.document.querySelector("table.normal:nth-child(9)") != null) {
             clearInterval(Timer);
             
-                //既読用ボタン作成
-                makeButton();
-                //個数入力枠作成
-                makeInputBox();
+            //既読用ボタン作成
+            makeButton();
+            //個数入力枠作成
+            makeInputBox();
         }
     }
 }

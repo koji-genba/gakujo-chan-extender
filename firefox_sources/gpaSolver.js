@@ -2,15 +2,15 @@ window.addEventListener("load", main, false);
 
 function main() {
     /*レポートの表が表示されてから処理を開始するためのやつ*/
-    const Timer = setInterval(loadCheck, 1000); //1秒まってから起動
+    const Timer = setInterval(loadCheck, 100); //100msごとに起動
     function loadCheck() {
-        if (document.getElementById("main-frame-if").contentWindow.document.querySelector("#creditsiReferListForm+table") != null) {
+        if (document.getElementById("main-frame-if").contentWindow.document.querySelector("#taniReferListForm+table") != null) {
             clearInterval(Timer);
             
             //GPA出力
-            printGpa()
+            printGpa();
             //ソート用ボタン作成
-            makeButton()
+            makeButton();
         }
     }
 }
@@ -26,7 +26,7 @@ function printGpa(){
 
 function loadTable(){
 
-    return document.getElementById("main-frame-if").contentWindow.document.querySelector("#creditsiReferListForm+table");
+    return document.getElementById("main-frame-if").contentWindow.document.querySelector("#taniReferListForm+table");
 }
 
 function calcGpa(table){
