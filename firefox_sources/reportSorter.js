@@ -2,51 +2,51 @@ window.addEventListener("load", main, false);
 
 function main(){
     /*レポートの表が表示されてから処理を開始するためのやつ*/
-    const Timer = setInterval(Loaded, 1000); //1秒まってから起動
-    function Loaded() {
+    const Timer = setInterval(loadCheck, 1000); //1秒まってから起動
+    function loadCheck() {
         if (document.getElementById("main-frame-if").contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)") != null) {
             clearInterval(Timer);
 
             setTempColorBlue();
-            MakeButton();
-            sortByDate(LoadReportTable());
+            makeButton();
+            sortByDate(loadReportTable());
         }
     }
 }
 
-function MakeButton(){
+function makeButton(){
     //ソート用ボタン生成1
-    titlebutton = document.createElement("button");
-    titlebutton.id = "titlebutton";
-    titlebutton.textContent = "タイトルでソート";
-    titlebutton.addEventListener('click',function(){
+    titleButton = document.createElement("button");
+    titleButton.id = "titleButton";
+    titleButton.textContent = "タイトルでソート";
+    titleButton.addEventListener('click',function(){
         sortByTitle(table);
     });
 
     //ソート用ボタン生成2
-    datebutton = document.createElement("button");
-    datebutton.id = "datebutton";
-    datebutton.textContent = "提出期間でソート";
-    datebutton.addEventListener('click',function(){
+    dateButton = document.createElement("button");
+    dateButton.id = "dateButton";
+    dateButton.textContent = "提出期間でソート";
+    dateButton.addEventListener('click',function(){
         sortByDate(table);
     });
 
     //ソート用ボタン生成3
-    numberbutton = document.createElement("button");
-    numberbutton.id = "numberbutton";
-    numberbutton.textContent = "開講番号でソート";
-    numberbutton.addEventListener('click',function(){
+    numberButton = document.createElement("button");
+    numberButton.id = "numberButton";
+    numberButton.textContent = "開講番号でソート";
+    numberButton.addEventListener('click',function(){
         sortByNumber(table);
     });
 
     //ソート用ボタン配置
-    document.getElementById("tabmenutable").appendChild(titlebutton);
-    document.getElementById("tabmenutable").appendChild(numberbutton);
-    document.getElementById("tabmenutable").appendChild(datebutton);
+    document.getElementById("tabmenutable").appendChild(titleButton);
+    document.getElementById("tabmenutable").appendChild(numberButton);
+    document.getElementById("tabmenutable").appendChild(dateButton);
 }
 
 function setTempColorBlue(){
-    table = LoadReportTable()
+    table = loadReportTable()
     //一時保存の文字を青色に変える
     for(let i = 0; i < table.rows.length; i++){
         if (table.rows[i].cells[2].textContent.match('一時保存')) {
@@ -58,7 +58,7 @@ function setTempColorBlue(){
     }
 }
 
-function LoadReportTable(){
+function loadReportTable(){
     //引数:なし
     //返す:レポート等々の表
     //依存:なし
@@ -80,33 +80,33 @@ function makeReportArray(table){
     //今の日付時刻取得
     now = getDate();
 
-    ReportArray = []; //データ入れる配列，後で二次元にする
+    reportArray = []; //データ入れる配列，後で二次元にする
 
     for(let i = 1; i < table.rows.length; i++){ //行のループ
-        ReportArray[i]=[] //配列を二次元にする，行内データを入れるため
+        reportArray[i]=[] //配列を二次元にする，行内データを入れるため
         for(let j = 0; j < table.rows[0].cells.length; j++){ //行内でのループ
-            ReportArray[i][j] = table.rows[i].cells[j].innerHTML; //提出ボタンがすっ飛んだりしないようにHTML生で取る
+            reportArray[i][j] = table.rows[i].cells[j].innerHTML; //提出ボタンがすっ飛んだりしないようにHTML生で取る
             //ソートするときにやりやすいように提出状態に応じてフラグを立てる，フラグはボタンのデータの次に格納
             if(j==2 && (table.rows[i].cells[j].textContent.match('未提出') || table.rows[i].cells[j].textContent.match('Not submitted'))){
-                ReportArray[i][table.rows[0].cells.length+1] = 1;
+                reportArray[i][table.rows[0].cells.length+1] = 1;
             }
             if(j==2 && (table.rows[i].cells[j].textContent.match('一時保存') || table.rows[i].cells[j].textContent.match('Temporarily saved'))){
-                ReportArray[i][table.rows[0].cells.length+1] = 2;
+                reportArray[i][table.rows[0].cells.length+1] = 2;
             }
             if(j==2 && (table.rows[i].cells[j].textContent.match('提出済') || table.rows[i].cells[j].textContent.match('Submitted'))){
-                ReportArray[i][table.rows[0].cells.length+1] = 3;
+                reportArray[i][table.rows[0].cells.length+1] = 3;
             }
             //日付ソートするときにやりやすいように締め切り日時を切り出して，/と:を消して格納する，↑のフラグのデータの次に格納
             if(j==7){
-                ReportArray[i][table.rows[0].cells.length+2] = table.rows[i].cells[j].textContent.substr(table.rows[i].cells[j].textContent.indexOf('～')+1);
-                ReportArray[i][table.rows[0].cells.length+2] = ReportArray[i][table.rows[0].cells.length+2].replace("/","");
-                ReportArray[i][table.rows[0].cells.length+2] = ReportArray[i][table.rows[0].cells.length+2].replace("/","");
-                ReportArray[i][table.rows[0].cells.length+2] = ReportArray[i][table.rows[0].cells.length+2].replace(":","");
-                ReportArray[i][table.rows[0].cells.length+2] = ReportArray[i][table.rows[0].cells.length+2].replace(" ","");
+                reportArray[i][table.rows[0].cells.length+2] = table.rows[i].cells[j].textContent.substr(table.rows[i].cells[j].textContent.indexOf('～')+1);
+                reportArray[i][table.rows[0].cells.length+2] = reportArray[i][table.rows[0].cells.length+2].replace("/","");
+                reportArray[i][table.rows[0].cells.length+2] = reportArray[i][table.rows[0].cells.length+2].replace("/","");
+                reportArray[i][table.rows[0].cells.length+2] = reportArray[i][table.rows[0].cells.length+2].replace(":","");
+                reportArray[i][table.rows[0].cells.length+2] = reportArray[i][table.rows[0].cells.length+2].replace(" ","");
             }
         }
     }
-    return ReportArray;
+    return reportArray;
 }
 
 function sortByDate(){
@@ -119,35 +119,35 @@ function sortByDate(){
     setTempColorBlue()
     
     //テーブルを二次元配列にする
-    table = LoadReportTable()
-    ReportArray = makeReportArray(table);
+    table = loadReportTable()
+    reportArray = makeReportArray(table);
 
     //締め切り過ぎてるモノだけを別配列にコピー
-    var array2 = [];
-    for(let i = 1; i < ReportArray.length; i++){ //行のループ
-        array2[i]=[]; //配列を二次元にする，行内データを入れるため
-        if(ReportArray[i][table.rows[0].cells.length+2] < now){ //締め切り過ぎてたら
+    var expiredReports = [];
+    for(let i = 1; i < reportArray.length; i++){ //行のループ
+        expiredReports[i]=[]; //配列を二次元にする，行内データを入れるため
+        if(reportArray[i][table.rows[0].cells.length+2] < now){ //締め切り過ぎてたら
             for(let j = 0; j <= table.rows[0].cells.length+2; j++){ //行内でのループ
-                array2[i][j] = ReportArray[i][j]; //データをコピー
-                ReportArray[i][j] = null; //コピーしたら元配列ではnullに
+                expiredReports[i][j] = reportArray[i][j]; //データをコピー
+                reportArray[i][j] = null; //コピーしたら元配列ではnullに
             }
         }else{
             for(let j = 0; j <= table.rows[0].cells.length+2; j++){ //行内でのループ
-                array2[i][j] = null;
+                expiredReports[i][j] = null;
             }
         }
     }
 
 
     //null要素を消して詰める
-    var active = ReportArray.filter(Boolean); //まだ期限になってないやつら
-    var eols = array2.filter(Boolean); //期限過ぎてるやつら
+    var active = reportArray.filter(Boolean); //まだ期限になってないやつら
+    var expired = expiredReports.filter(Boolean); //期限過ぎてるやつら
     //締め切り日時についてソート
     active.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
-    eols.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
+    expired.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
     //提出状況についてソート
     active.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
-    eols.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
+    expired.sort(function(a,b){return(a[table.rows[0].cells.length+1] - b[table.rows[0].cells.length+1]);});
     //まだ期限になってないレポートと期限切れレポートの配列をまとめる
     var tasks = [];
     var skip = 0;
@@ -163,11 +163,11 @@ function sortByDate(){
         }
     }
         //期限内のやつ
-    for(let i=active.length; i<(active.length + eols.length); i++){
-        if(eols[i-active.length][1]){
+    for(let i=active.length; i<(active.length + expired.length); i++){
+        if(expired[i-active.length][1]){
             tasks[i-skip]=[];
             for(let j = 0; j < table.rows[0].cells.length; j++){
-                tasks[i-skip][j] = eols[i-active.length][j];
+                tasks[i-skip][j] = expired[i-active.length][j];
             }
         }else{
             skip++;
@@ -192,14 +192,14 @@ function sortByNumber(){
     setTempColorBlue()
     
     //テーブルを二次元配列にする
-    table = LoadReportTable()
-    ReportArray = makeReportArray(table);
+    table = loadReportTable()
+    reportArray = makeReportArray(table);
 
     //締め切り日時についてソート
-    ReportArray.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
+    reportArray.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
 
     //開講番号でソート
-    ReportArray.sort((a,b)=>{
+    reportArray.sort((a,b)=>{
         if(a[3] < b[3]) return -1;
         else if(a[3] > b[3]) return 1;
         return 0;
@@ -207,9 +207,9 @@ function sortByNumber(){
 
 
     //ソートしたデータでテーブルを書き換え
-    for(let i = 0; i < ReportArray.length-1; i++){
+    for(let i = 0; i < reportArray.length-1; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
-            table.rows[i+1].cells[j].innerHTML = ReportArray[i][j];
+            table.rows[i+1].cells[j].innerHTML = reportArray[i][j];
         }
     }
 }
@@ -224,14 +224,14 @@ function sortByTitle(){
     setTempColorBlue()
     
     //テーブルを二次元配列にする
-    table = LoadReportTable()
-    ReportArray = makeReportArray(table);
+    table = loadReportTable()
+    reportArray = makeReportArray(table);
 
     //締め切り日時についてソート
-    ReportArray.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
+    reportArray.sort(function(a,b){return(a[table.rows[0].cells.length+2] - b[table.rows[0].cells.length+2]);});
 
     //タイトルでソート
-    ReportArray.sort((a,b)=>{
+    reportArray.sort((a,b)=>{
         if(a[1] < b[1]) return -1;
         else if(a[1] > b[1]) return 1;
         return 0;
@@ -239,9 +239,9 @@ function sortByTitle(){
 
 
     //ソートしたデータでテーブルを書き換え
-    for(let i = 0; i < ReportArray.length-1; i++){
+    for(let i = 0; i < reportArray.length-1; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
-            table.rows[i+1].cells[j].innerHTML = ReportArray[i][j];
+            table.rows[i+1].cells[j].innerHTML = reportArray[i][j];
         }
     }
 }
