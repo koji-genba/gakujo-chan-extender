@@ -2,7 +2,7 @@ window.addEventListener("load", main, false);
 
 function main(){
     /*レポートの表が表示されてから処理を開始するためのやつ*/
-    const Timer = setInterval(loadCheck, 1000); //1秒ごとに起動
+    const Timer = setInterval(loadCheck, 100); //100msごとに起動
     function loadCheck() {
         if (document.getElementById("main-frame-if").contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)") != null) {
             clearInterval(Timer);
