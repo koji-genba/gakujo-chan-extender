@@ -136,13 +136,12 @@ function sortByNumber(){
     });
 
     //ソートしたデータで表を書き換え
-    for(let i = 0; i < tableArray.length; i++){
+    for(let i = 0; i < tableArray.length-1; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
             table.rows[i+1].cells[j].innerHTML = tableArray[i][j];
         }
     }
 
-    printGpa()
 }
 
 function sortByOpennum(){
@@ -172,12 +171,11 @@ function sortByOpennum(){
     });
 
     //ソートしたデータで表を書き換え
-    for(let i = 0; i < tableArray.length; i++){
+    for(let i = 0; i < tableArray.length-1; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
             table.rows[i+1].cells[j].innerHTML = tableArray[i][j];
         }
     }
-    printGpa()
 }
 
 function sortByScore(){
@@ -204,10 +202,9 @@ function sortByScore(){
     });
 
     //ソートしたデータでテーブルを書き換え
-    for(let i = 0; i < tableArray.length; i++){
+    for(let i = 0; i < tableArray.length-1; i++){
         for(let j = 0; j < table.rows[0].cells.length; j++){
             table.rows[i+1].cells[j].innerHTML = tableArray[i][j];
         }
     }
-    printGpa()
 }
