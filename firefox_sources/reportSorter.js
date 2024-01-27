@@ -2,7 +2,7 @@ window.addEventListener("load", main, false);
 
 function main(){
     /*レポートの表が表示されてから処理を開始するためのやつ*/
-    const Timer = setInterval(loadCheck, 1000); //1秒まってから起動
+    const Timer = setInterval(loadCheck, 1000); //1秒ごとに起動
     function loadCheck() {
         if (document.getElementById("main-frame-if").contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)") != null) {
             clearInterval(Timer);
@@ -46,8 +46,12 @@ function makeButton(){
 }
 
 function setTempColorBlue(){
+    //引数:なし
+    //返す:なし
+    //依存:loadReportTable
+    //作用:一時保存の文字を青色に変える
+    
     table = loadReportTable()
-    //一時保存の文字を青色に変える
     for(let i = 0; i < table.rows.length; i++){
         if (table.rows[i].cells[2].textContent.match('一時保存')) {
             table.rows[i].cells[2].innerHTML = "<font color=\"blue\">一時保存</font>";
@@ -62,16 +66,16 @@ function loadReportTable(){
     //引数:なし
     //返す:レポート等々の表
     //依存:なし
-    //その他作用:なし
+    //作用:なし
 
     return document.getElementById("main-frame-if").contentWindow.document.querySelector("#enqListForm table:nth-of-type(2)");
 }
 
 function makeReportArray(table){
     //引数:レポート等々の表
-    //返す:↑を成形しデータ付加た二次元配列
-    //依存:getDate(日付時刻取得), (load(レポート等々表取得))
-    //その他作用:なし
+    //返す:↑を成形しデータ付加した二次元配列
+    //依存:getDate(日付時刻取得)
+    //作用:なし
 
     //今の日付時刻取得
     now = getDate();
@@ -109,7 +113,7 @@ function sortByDate(){
     //引数:なし
     //返す:なし
     //依存:makeReportArray(表->配列のため), setTempColorBlue()
-    //その他作用:レポート等々の表を提出期限でソートする(未提出->一次提出->提出済)
+    //作用:レポート等々の表を提出期限でソートする(未提出->一次提出->提出済)
     
     //一時保存青に
     setTempColorBlue()
@@ -182,7 +186,7 @@ function sortByNumber(){
     //引数:なし
     //返す:なし
     //依存:makeReportArray(表->配列のため), setTempColorBlue()
-    //その他作用:レポート等々の表を開講番号でソートする
+    //作用:レポート等々の表を開講番号でソートする
     
     //一時保存青に
     setTempColorBlue()
@@ -214,7 +218,7 @@ function sortByTitle(){
     //引数:なし
     //返す:なし
     //依存:makeReportArray(表->配列のため), setTempColorBlue()
-    //その他作用:レポート等々の表をタイトルでソートする
+    //作用:レポート等々の表をタイトルでソートする
 
     //一時保存青に
     setTempColorBlue()
@@ -246,7 +250,7 @@ function getDate(){
     //引数:なし
     //返す:日付時刻連結の文字列 ex:2023/6/7/22:18 -> 202306072218
     //依存:なし
-    //その他作用:なし
+    //作用:なし
 
     //日付オブジェクト取得
     var now = new Date();
