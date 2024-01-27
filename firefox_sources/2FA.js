@@ -87,5 +87,5 @@ function keySave(){
     //依存:main
     //作用:mainで生成した鍵保存フォームの内容をストレージに保存
     var str = document.getElementById("keyEntryForm").value; //
-    chrome.storage.local.set({"key": str});
+    browser.storage.local.set({"key": str});
 }
