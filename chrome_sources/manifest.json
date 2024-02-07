@@ -15,9 +15,9 @@
         "tabs"
     ],
 
-    "background" : {
-        "scripts" : [ "backGround.js" ],
-        "persistent": true
+    "background": {
+        "service_worker": "backGround.js",
+        "type": "module"
     },
 
 
